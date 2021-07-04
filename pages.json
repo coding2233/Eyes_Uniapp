@@ -1,0 +1,239 @@
+{
+	"pages": [
+		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+		    "path" : "pages/loading/loading",
+		   "style": {
+		   	"navigationStyle": "custom"
+		   }
+		    
+		},
+		{
+			"path": "pages/home/home",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#007AFF",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		},
+		{
+			"path": "pages/me/me",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#007AFF",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/record/record",
+			"style": {
+				"navigationBarTitleText": "记录",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#007AFF",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/diagnosis/diagnosis",
+			"style": {
+				"navigationBarTitleText": "诊治",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#007AFF",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "欢迎登录",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#007AFF"
+			}
+		},
+		{
+			"path": "pages/login/register",
+			"style": {
+				"navigationBarTitleText": "用户注册",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#007AFF",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/info/info",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#007AFF",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/list2detail-list/list2detail-list",
+			"style": {
+				"navigationBarTitleText": "列表到详情示例",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/list2detail-detail/list2detail-detail",
+			"style": {
+				"navigationBarTitleText": "详情",
+				"app-plus": {
+					"titleNView": {
+						"type": "transparent"
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/Intraocular-pressure/Intraocular-pressure",
+			"style": {
+				"navigationBarTitleText": "眼压数据",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#007AFF",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/questionnaire1/questionnaire1",
+			"style": {
+				"navigationBarTitleText": "药物依从性量表",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#007AFF",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/questionnaire2/questionnaire2",
+			"style": {
+				"navigationBarTitleText": "感知压力量表",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#007AFF",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/me/info/info",
+			"style": {
+				"navigationBarTitleText": "个人信息设置",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#007AFF",
+				"enablePullDownRefresh": false
+			}
+		}
+	    ,{
+            "path" : "pages/medical-record/medical-record",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "就诊记录",
+                "navigationBarTextStyle": "white",
+                "navigationBarBackgroundColor": "#007AFF",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/treatment-method/treatment-method",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "治疗方式",
+                "navigationBarTextStyle": "white",
+                "navigationBarBackgroundColor": "#007AFF",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/visit-reminder/visit-reminder",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "就诊提醒",
+                "navigationBarTextStyle": "white",
+                "navigationBarBackgroundColor": "#007AFF",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/medication-reminder/medication-reminder",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "用药提醒",
+                "navigationBarTextStyle": "white",
+                "navigationBarBackgroundColor": "#007AFF",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/archives/archives",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的青光眼档案",
+                "navigationBarTextStyle": "white",
+                "navigationBarBackgroundColor": "#007AFF",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/agreement/agreement",
+            "style" :                                                                                    
+            {
+               "navigationBarTitleText": "用户协议",
+               "navigationBarTextStyle": "white",
+               "navigationBarBackgroundColor": "#007AFF",
+               "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"tabBar": {
+		"color": "#7A7E83",
+		"fontSize": "16px",
+		"selectedColor": "#007AFF",
+		"borderStyle": "black",
+		"backgroundColor": "#F8F8F8",
+		"height": "56px",
+		"list": [{
+				"pagePath": "pages/home/home",
+				"text": "首页",
+				"iconPath": "static/img/tabbar/md-home.png",
+				"selectedIconPath": "static/img/tabbar/md-home (1).png"
+			},
+			{
+				"pagePath": "pages/diagnosis/diagnosis",
+				"text": "诊治",
+				"iconPath": "static/img/tabbar/md-briefcase.png",
+				"selectedIconPath": "static/img/tabbar/md-briefcase (1).png"
+			},
+			{
+				"pagePath": "pages/record/record",
+				"text": "记录",
+				"iconPath": "static/img/tabbar/md-cloud-upload.png",
+				"selectedIconPath": "static/img/tabbar/md-cloud-upload%20(1).png"
+			},
+			{
+				"pagePath": "pages/me/me",
+				"text": "个人中心",
+				"iconPath": "static/img/tabbar/md-person.png",
+				"selectedIconPath": "static/img/tabbar/md-person (1).png"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	}
+}
