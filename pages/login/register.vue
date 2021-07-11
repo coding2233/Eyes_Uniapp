@@ -163,6 +163,9 @@
 						console.log(f)
 						_this.isRotate=false
 						this.$queue.showToast('注册成功')
+						uni.navigateTo({
+							url:"./login"
+						})
 					}else{
 						_this.isRotate=false
 						uni.showToast({
