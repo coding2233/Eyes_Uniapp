@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysUserRemindMapper">
+    
+    <resultMap type="SysUserRemind" id="SysUserRemindResult">
+        <result property="remindId"    column="remind_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="remindType"    column="remind_type"    />
+        <result property="remind"    column="remind"    />
+        <result property="remindTime"    column="remind_time"    />
+        <result property="drugs"    column="drugs"    />
+        <result property="drugsStartTime"    column="drugs_start_time"    />
+        <result property="drugsEndTime"    column="drugs_end_time"    />
+        <result property="drugsMode"    column="drugs_mode"    />
+    </resultMap>
+
+    <sql id="selectSysUserRemindVo">
+        select remind_id, user_id, remind_type, remind, remind_time, drugs, drugs_start_time, drugs_end_time, drugs_mode from sys_user_remind
+    </sql>
+
+    <select id="selectSysUserRemindList" parameterType="SysUserRemind" resultMap="SysUserRemindResult">
+        <include refid="selectSysUserRemindVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="remindType != null "> and remind_type = #{remindType}</if>
+            <if test="remind != null  and remind != ''"> and remind = #{remind}</if>
+            <if test="remindTime != null "> and remind_time = #{remindTime}</if>
+            <if test="drugs != null  and drugs != ''"> and drugs = #{drugs}</if>
+            <if test="drugsStartTime != null "> and drugs_start_time = #{drugsStartTime}</if>
+            <if test="drugsEndTime != null "> and drugs_end_time = #{drugsEndTime}</if>
+            <if test="drugsMode != null  and drugsMode != ''"> and drugs_mode = #{drugsMode}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysUserRemindById" parameterType="Long" resultMap="SysUserRemindResult">
+        <include refid="selectSysUserRemindVo"/>
+        where remind_id = #{remindId}
+    </select>
+        
+    <insert id="insertSysUserRemind" parameterType="SysUserRemind" useGeneratedKeys="true" keyProperty="remindId">
+        insert into sys_user_remind
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="remindType != null">remind_type,</if>
+            <if test="remind != null">remind,</if>
+            <if test="remindTime != null">remind_time,</if>
+            <if test="drugs != null">drugs,</if>
+            <if test="drugsStartTime != null">drugs_start_time,</if>
+            <if test="drugsEndTime != null">drugs_end_time,</if>
+            <if test="drugsMode != null">drugs_mode,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="remindType != null">#{remindType},</if>
+            <if test="remind != null">#{remind},</if>
+            <if test="remindTime != null">#{remindTime},</if>
+            <if test="drugs != null">#{drugs},</if>
+            <if test="drugsStartTime != null">#{drugsStartTime},</if>
+            <if test="drugsEndTime != null">#{drugsEndTime},</if>
+            <if test="drugsMode != null">#{drugsMode},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysUserRemind" parameterType="SysUserRemind">
+        update sys_user_remind
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="remindType != null">remind_type = #{remindType},</if>
+            <if test="remind != null">remind = #{remind},</if>
+            <if test="remindTime != null">remind_time = #{remindTime},</if>
+            <if test="drugs != null">drugs = #{drugs},</if>
+            <if test="drugsStartTime != null">drugs_start_time = #{drugsStartTime},</if>
+            <if test="drugsEndTime != null">drugs_end_time = #{drugsEndTime},</if>
+            <if test="drugsMode != null">drugs_mode = #{drugsMode},</if>
+        </trim>
+        where remind_id = #{remindId}
+    </update>
+
+    <delete id="deleteSysUserRemindById" parameterType="Long">
+        delete from sys_user_remind where remind_id = #{remindId}
+    </delete>
+
+    <delete id="deleteSysUserRemindByIds" parameterType="String">
+        delete from sys_user_remind where remind_id in 
+        <foreach item="remindId" collection="array" open="(" separator="," close=")">
+            #{remindId}
+        </foreach>
+    </delete>
+</mapper>

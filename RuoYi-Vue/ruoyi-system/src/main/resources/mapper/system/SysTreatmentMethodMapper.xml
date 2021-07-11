@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysTreatmentMethodMapper">
+    
+    <resultMap type="SysTreatmentMethod" id="SysTreatmentMethodResult">
+        <result property="methodId"    column="method_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="drugs"    column="drugs"    />
+        <result property="drugsStartTime"    column="drugs_start_time"    />
+        <result property="drugsEndTime"    column="drugs_end_time"    />
+        <result property="laser"    column="laser"    />
+        <result property="laserTime"    column="laser_time"    />
+        <result property="operation"    column="operation"    />
+        <result property="operationTime"    column="operation_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectSysTreatmentMethodVo">
+        select method_id, user_id, drugs, drugs_start_time, drugs_end_time, laser, laser_time, operation, operation_time, remark from sys_treatment_method
+    </sql>
+
+    <select id="selectSysTreatmentMethodList" parameterType="SysTreatmentMethod" resultMap="SysTreatmentMethodResult">
+        <include refid="selectSysTreatmentMethodVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="drugs != null  and drugs != ''"> and drugs = #{drugs}</if>
+            <if test="drugsStartTime != null "> and drugs_start_time = #{drugsStartTime}</if>
+            <if test="drugsEndTime != null "> and drugs_end_time = #{drugsEndTime}</if>
+            <if test="laser != null  and laser != ''"> and laser = #{laser}</if>
+            <if test="laserTime != null "> and laser_time = #{laserTime}</if>
+            <if test="operation != null  and operation != ''"> and operation = #{operation}</if>
+            <if test="operationTime != null "> and operation_time = #{operationTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysTreatmentMethodById" parameterType="Long" resultMap="SysTreatmentMethodResult">
+        <include refid="selectSysTreatmentMethodVo"/>
+        where method_id = #{methodId}
+    </select>
+        
+    <insert id="insertSysTreatmentMethod" parameterType="SysTreatmentMethod" useGeneratedKeys="true" keyProperty="methodId">
+        insert into sys_treatment_method
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="drugs != null">drugs,</if>
+            <if test="drugsStartTime != null">drugs_start_time,</if>
+            <if test="drugsEndTime != null">drugs_end_time,</if>
+            <if test="laser != null">laser,</if>
+            <if test="laserTime != null">laser_time,</if>
+            <if test="operation != null">operation,</if>
+            <if test="operationTime != null">operation_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="drugs != null">#{drugs},</if>
+            <if test="drugsStartTime != null">#{drugsStartTime},</if>
+            <if test="drugsEndTime != null">#{drugsEndTime},</if>
+            <if test="laser != null">#{laser},</if>
+            <if test="laserTime != null">#{laserTime},</if>
+            <if test="operation != null">#{operation},</if>
+            <if test="operationTime != null">#{operationTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysTreatmentMethod" parameterType="SysTreatmentMethod">
+        update sys_treatment_method
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="drugs != null">drugs = #{drugs},</if>
+            <if test="drugsStartTime != null">drugs_start_time = #{drugsStartTime},</if>
+            <if test="drugsEndTime != null">drugs_end_time = #{drugsEndTime},</if>
+            <if test="laser != null">laser = #{laser},</if>
+            <if test="laserTime != null">laser_time = #{laserTime},</if>
+            <if test="operation != null">operation = #{operation},</if>
+            <if test="operationTime != null">operation_time = #{operationTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where method_id = #{methodId}
+    </update>
+
+    <delete id="deleteSysTreatmentMethodById" parameterType="Long">
+        delete from sys_treatment_method where method_id = #{methodId}
+    </delete>
+
+    <delete id="deleteSysTreatmentMethodByIds" parameterType="String">
+        delete from sys_treatment_method where method_id in 
+        <foreach item="methodId" collection="array" open="(" separator="," close=")">
+            #{methodId}
+        </foreach>
+    </delete>
+</mapper>

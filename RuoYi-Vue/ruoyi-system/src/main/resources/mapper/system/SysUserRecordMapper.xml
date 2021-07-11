@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysUserRecordMapper">
+    
+    <resultMap type="SysUserRecord" id="SysUserRecordResult">
+        <result property="recordId"    column="record_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="visionLeft"    column="vision_left"    />
+        <result property="visionRight"    column="vision_right"    />
+        <result property="pressureLeft"    column="pressure_left"    />
+        <result property="pressureRight"    column="pressure_right"    />
+        <result property="recordTime"    column="record_time"    />
+        <result property="medication"    column="medication"    />
+        <result property="emotion"    column="emotion"    />
+        <result property="motion"    column="motion"    />
+    </resultMap>
+
+    <sql id="selectSysUserRecordVo">
+        select record_id, user_id, vision_left, vision_right, pressure_left, pressure_right, record_time, medication, emotion, motion from sys_user_record
+    </sql>
+
+    <select id="selectSysUserRecordList" parameterType="SysUserRecord" resultMap="SysUserRecordResult">
+        <include refid="selectSysUserRecordVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="visionLeft != null "> and vision_left = #{visionLeft}</if>
+            <if test="visionRight != null "> and vision_right = #{visionRight}</if>
+            <if test="pressureLeft != null "> and pressure_left = #{pressureLeft}</if>
+            <if test="pressureRight != null "> and pressure_right = #{pressureRight}</if>
+            <if test="recordTime != null "> and record_time = #{recordTime}</if>
+            <if test="medication != null  and medication != ''"> and medication = #{medication}</if>
+            <if test="emotion != null  and emotion != ''"> and emotion = #{emotion}</if>
+            <if test="motion != null  and motion != ''"> and motion = #{motion}</if>
+        </where>
+        ORDER BY record_time
+    </select>
+    
+    <select id="selectSysUserRecordById" parameterType="Long" resultMap="SysUserRecordResult">
+        <include refid="selectSysUserRecordVo"/>
+        where record_id = #{recordId}
+    </select>
+        
+    <insert id="insertSysUserRecord" parameterType="SysUserRecord" useGeneratedKeys="true" keyProperty="recordId">
+        insert into sys_user_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="visionLeft != null">vision_left,</if>
+            <if test="visionRight != null">vision_right,</if>
+            <if test="pressureLeft != null">pressure_left,</if>
+            <if test="pressureRight != null">pressure_right,</if>
+            <if test="recordTime != null">record_time,</if>
+            <if test="medication != null">medication,</if>
+            <if test="emotion != null">emotion,</if>
+            <if test="motion != null">motion,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="visionLeft != null">#{visionLeft},</if>
+            <if test="visionRight != null">#{visionRight},</if>
+            <if test="pressureLeft != null">#{pressureLeft},</if>
+            <if test="pressureRight != null">#{pressureRight},</if>
+            <if test="recordTime != null">#{recordTime},</if>
+            <if test="medication != null">#{medication},</if>
+            <if test="emotion != null">#{emotion},</if>
+            <if test="motion != null">#{motion},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysUserRecord" parameterType="SysUserRecord">
+        update sys_user_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="visionLeft != null">vision_left = #{visionLeft},</if>
+            <if test="visionRight != null">vision_right = #{visionRight},</if>
+            <if test="pressureLeft != null">pressure_left = #{pressureLeft},</if>
+            <if test="pressureRight != null">pressure_right = #{pressureRight},</if>
+            <if test="recordTime != null">record_time = #{recordTime},</if>
+            <if test="medication != null">medication = #{medication},</if>
+            <if test="emotion != null">emotion = #{emotion},</if>
+            <if test="motion != null">motion = #{motion},</if>
+        </trim>
+        where record_id = #{recordId}
+    </update>
+
+    <delete id="deleteSysUserRecordById" parameterType="Long">
+        delete from sys_user_record where record_id = #{recordId}
+    </delete>
+
+    <delete id="deleteSysUserRecordByIds" parameterType="String">
+        delete from sys_user_record where record_id in 
+        <foreach item="recordId" collection="array" open="(" separator="," close=")">
+            #{recordId}
+        </foreach>
+    </delete>
+</mapper>

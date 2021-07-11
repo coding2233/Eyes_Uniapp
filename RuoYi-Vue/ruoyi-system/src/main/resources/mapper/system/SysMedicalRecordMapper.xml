@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysMedicalRecordMapper">
+    
+    <resultMap type="SysMedicalRecord" id="SysMedicalRecordResult">
+        <result property="recordId"    column="record_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="md"    column="md"    />
+        <result property="psd"    column="psd"    />
+        <result property="bh"    column="bh"    />
+        <result property="um"    column="um"    />
+        <result property="rnfl"    column="rnfl"    />
+        <result property="medicalTime"    column="medical_time"    />
+        <result property="hospital"    column="hospital"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectSysMedicalRecordVo">
+        select record_id, user_id, md, psd, bh, um, rnfl, medical_time, hospital, remark from sys_medical_record
+    </sql>
+
+    <select id="selectSysMedicalRecordList" parameterType="SysMedicalRecord" resultMap="SysMedicalRecordResult">
+        <include refid="selectSysMedicalRecordVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="md != null "> and md = #{md}</if>
+            <if test="psd != null "> and psd = #{psd}</if>
+            <if test="bh != null "> and bh = #{bh}</if>
+            <if test="um != null "> and um = #{um}</if>
+            <if test="rnfl != null "> and rnfl = #{rnfl}</if>
+            <if test="medicalTime != null "> and medical_time = #{medicalTime}</if>
+            <if test="hospital != null  and hospital != ''"> and hospital = #{hospital}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysMedicalRecordById" parameterType="Long" resultMap="SysMedicalRecordResult">
+        <include refid="selectSysMedicalRecordVo"/>
+        where record_id = #{recordId}
+    </select>
+        
+    <insert id="insertSysMedicalRecord" parameterType="SysMedicalRecord" useGeneratedKeys="true" keyProperty="recordId">
+        insert into sys_medical_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="md != null">md,</if>
+            <if test="psd != null">psd,</if>
+            <if test="bh != null">bh,</if>
+            <if test="um != null">um,</if>
+            <if test="rnfl != null">rnfl,</if>
+            <if test="medicalTime != null">medical_time,</if>
+            <if test="hospital != null">hospital,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="md != null">#{md},</if>
+            <if test="psd != null">#{psd},</if>
+            <if test="bh != null">#{bh},</if>
+            <if test="um != null">#{um},</if>
+            <if test="rnfl != null">#{rnfl},</if>
+            <if test="medicalTime != null">#{medicalTime},</if>
+            <if test="hospital != null">#{hospital},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysMedicalRecord" parameterType="SysMedicalRecord">
+        update sys_medical_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="md != null">md = #{md},</if>
+            <if test="psd != null">psd = #{psd},</if>
+            <if test="bh != null">bh = #{bh},</if>
+            <if test="um != null">um = #{um},</if>
+            <if test="rnfl != null">rnfl = #{rnfl},</if>
+            <if test="medicalTime != null">medical_time = #{medicalTime},</if>
+            <if test="hospital != null">hospital = #{hospital},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where record_id = #{recordId}
+    </update>
+
+    <delete id="deleteSysMedicalRecordById" parameterType="Long">
+        delete from sys_medical_record where record_id = #{recordId}
+    </delete>
+
+    <delete id="deleteSysMedicalRecordByIds" parameterType="String">
+        delete from sys_medical_record where record_id in 
+        <foreach item="recordId" collection="array" open="(" separator="," close=")">
+            #{recordId}
+        </foreach>
+    </delete>
+</mapper>
