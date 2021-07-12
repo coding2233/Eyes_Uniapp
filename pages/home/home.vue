@@ -9,10 +9,14 @@
 						<view v-if="item.badge" class="grid-dot">
 							<uni-badge :text="item.badge" :type="item.type" />
 						</view>
-						<text class="text" style="width: 260rpx; font-size: 12px; margin:0 auto; text-align: center;"> {{ currentPressure }} </text>
-					<!-- 	userInfo.pressureLeft?('左眼:'+ userInfo.pressureLeft+'右眼'+userInfo.pressureRight) -->
-					<!-- "目标眼压:15~18mmHg" -->
-						<!-- <input disabled="true" style="width: 260rpx; font-size: 12px;" placeholder={{currentPressure}} /> -->
+						
+						<view v-if="currentPressureType<=1" class="example-body">
+							<text class="text" style="width: 260rpx; font-size: 12px; margin:0 auto; text-align: center;"> {{ getCurrentPressure() }} </text>
+						</view>
+						<view v-else class="example-body">
+							<text class="text" style="color: #FF0000; width: 260rpx; font-size: 12px; margin:0 auto; text-align: center;"> {{ getCurrentPressure() }} </text>
+						</view>
+						
 					</view>
 					<view v-if="index!=1" class="grid-item-box">
 						<image class="subimgae" :src="item.url" mode="aspectFill" />
@@ -128,7 +132,7 @@
 				],
 				last_id: "",
 				reload: false,
-				currentPressure: "正常眼压值：10~21mmHg",
+				currentPressureType: 0,
 			}
 		},
 		onLoad() {
@@ -177,7 +181,6 @@
 						}
 
 					})
-				this.currentPressure=this.userInfo.pressureLeft?('左眼:'+ userInfo.pressureLeft+'右眼'+userInfo.pressureRight):"正常眼压值：10~21mmHg"
 			},
 			change(e) {
 				let {
@@ -339,6 +342,42 @@
 			},
 			handleCancel(e) {
 				console.log('cancel::', e)
+			},
+			getCurrentPressure()
+			{
+				var pressureText=""
+				this.currentPressureType=1
+				
+				if (typeof this.userInfo != "undefined" ){
+					if(this.userInfo.pressureLeft){
+						if (this.userInfo.pressureLeft<10||this.userInfo.pressureRight<10){
+							this.currentPressureType=2
+						}else if(this.userInfo.pressureLeft>21||this.userInfo.pressureRight>21){
+							this.currentPressureType=3
+						}else
+						{
+							this.currentPressureType=1
+						}
+					}
+				}
+				if(this.currentPressureType==0)
+				{
+					pressureText="正常眼压值：10~21mmHg"
+				}
+				else if(this.currentPressureType==2)
+				{
+					pressureText='左眼:'+ userInfo.pressureLeft+'右眼'+userInfo.pressureRight+'\n低眼压'
+				}
+				else if(this.currentPressureType==3)
+				{
+					pressureText='左眼:'+ userInfo.pressureLeft+'右眼'+userInfo.pressureRight+'\n高眼压'
+				}
+				else
+				{
+					pressureText='左眼:'+ userInfo.pressureLeft+'右眼'+userInfo.pressureRight+'\n正常眼压'
+				}
+				
+				return pressureText
 			},
 		}
 	}
