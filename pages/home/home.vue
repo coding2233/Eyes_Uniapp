@@ -346,9 +346,9 @@
 			getCurrentPressure()
 			{
 				var pressureText=""
-				this.currentPressureType=1
+				this.currentPressureType=0
 				
-				if (typeof this.userInfo != "undefined" ){
+				if (typeof this.userInfo){
 					if(this.userInfo.pressureLeft){
 						if (this.userInfo.pressureLeft<10||this.userInfo.pressureRight<10){
 							this.currentPressureType=2
@@ -360,21 +360,22 @@
 						}
 					}
 				}
+				
 				if(this.currentPressureType==0)
 				{
 					pressureText="正常眼压值：10~21mmHg"
 				}
 				else if(this.currentPressureType==2)
 				{
-					pressureText='左眼:'+ userInfo.pressureLeft+'右眼'+userInfo.pressureRight+'\n低眼压'
+					pressureText='左眼:'+ this.userInfo.pressureLeft+'右眼'+this.userInfo.pressureRight+'\n低眼压'
 				}
 				else if(this.currentPressureType==3)
 				{
-					pressureText='左眼:'+ userInfo.pressureLeft+'右眼'+userInfo.pressureRight+'\n高眼压'
+					pressureText='左眼:'+ this.userInfo.pressureLeft+'右眼'+this.userInfo.pressureRight+'\n高眼压'
 				}
 				else
 				{
-					pressureText='左眼:'+ userInfo.pressureLeft+'右眼'+userInfo.pressureRight+'\n正常眼压'
+					pressureText='左眼:'+ this.userInfo.pressureLeft+'右眼'+this.userInfo.pressureRight+'\n正常眼压'
 				}
 				
 				return pressureText
