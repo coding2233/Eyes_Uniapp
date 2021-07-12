@@ -9,10 +9,13 @@
 						<view v-if="item.badge" class="grid-dot">
 							<uni-badge :text="item.badge" :type="item.type" />
 						</view>
-						<input disabled="true" style="width: 260rpx; font-size: 12px;" placeholder="目标眼压:15~18mmHg" />
+						<text class="text" style="width: 260rpx; font-size: 12px; margin:0 auto; text-align: center;"> {{ currentPressure }} </text>
+					<!-- 	userInfo.pressureLeft?('左眼:'+ userInfo.pressureLeft+'右眼'+userInfo.pressureRight) -->
+					<!-- "目标眼压:15~18mmHg" -->
+						<!-- <input disabled="true" style="width: 260rpx; font-size: 12px;" placeholder={{currentPressure}} /> -->
 					</view>
 					<view v-if="index!=1" class="grid-item-box">
-						<image class="image" :src="item.url" mode="aspectFill" />
+						<image class="subimgae" :src="item.url" mode="aspectFill" />
 						<text class="text">{{item.text}}</text>
 						<view v-if="item.badge" class="grid-dot">
 							<uni-badge :text="item.badge" :type="item.type" />
@@ -71,7 +74,6 @@
 		data() {
 			return {
 				showModal1: false,
-
 				userInfo: {},
 				list: [{
 						url: '/static/img/home/date.png',
@@ -125,7 +127,8 @@
 					}
 				],
 				last_id: "",
-				reload: false
+				reload: false,
+				currentPressure: "正常眼压值：10~21mmHg",
 			}
 		},
 		onLoad() {
@@ -169,9 +172,12 @@
 								}
 
 							}
+							
+							
 						}
 
 					})
+				this.currentPressure=this.userInfo.pressureLeft?('左眼:'+ userInfo.pressureLeft+'右眼'+userInfo.pressureRight):"正常眼压值：10~21mmHg"
 			},
 			change(e) {
 				let {
@@ -439,6 +445,12 @@
 	.image {
 		width: 100rpx;
 		height: 100rpx;
+	}
+	
+	.subimgae
+	{
+		width: 80rpx;
+		height: 80rpx;
 	}
 
 	.text {
