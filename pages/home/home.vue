@@ -10,12 +10,8 @@
 							<uni-badge :text="item.badge" :type="item.type" />
 						</view>
 						
-						<view v-if="currentPressureType<=1">
-							<text class="text" style="width: 260rpx; font-size: 12px; margin:0 auto; text-align: center;"> {{ currentPressure }} </text>
-						</view>
-						<view v-else>
-							<text class="text" style="color: #FF0000; width: 260rpx; font-size: 12px; margin:0 auto; text-align: center;"> {{ currentPressure }} </text>
-						</view>
+						<text v-if="currentPressureType<=1" class="pressureText"> {{ currentPressure }} </text>
+						<text v-else class="pressureOverflowText">{{ currentPressure }}</text>
 						
 					</view>
 					<view v-if="index!=1" class="grid-item-box">
@@ -760,4 +756,22 @@
 		height: 50upx;
 		line-height: 50upx;
 	}
+	
+	.pressureText
+	{
+		width: 260rpx; 
+		font-size: 12px; 
+		margin: auto; 
+		text-align: center;
+	}
+	
+	.pressureOverflowText
+	{
+		color: #FF0000;
+		width: 260rpx; 
+		font-size: 12px; 
+		margin: auto; 
+		text-align: center;
+	}
+	
 </style>
