@@ -140,6 +140,9 @@
 			// this.getList();
 			this.loadData();
 		},
+		onShow() {
+			this.getUserInfo()
+		},
 		onPullDownRefresh() {
 			this.reload = true;
 			this.last_id = "";
@@ -343,18 +346,47 @@
 			handleCancel(e) {
 				console.log('cancel::', e)
 			},
+			getUserInfo() {
+				this.$Request.get('/getInfo').then(f => {
+					if (f.code == 200) {
+						let userInfo = f.userInfo
+						userInfo.userId = f.user.userId
+						userInfo.userName = f.user.userName
+						this.$Request.get("/system/record/getInfoById/" + userInfo.userId).then(res => {
+							if (res.code == 200) {
+								if (res.data.length!=0) {
+									console.log(res)
+									userInfo.pressureLeft = res.data[res.data.length - 1].pressureLeft
+									userInfo.pressureRight = res.data[res.data.length - 1].pressureRight
+								}else{
+									userInfo.pressureLeft = ''
+									userInfo.pressureRight = ''
+								}
+								this.$queue.setData("UserInfo", userInfo)
+								this.loadData()
+							}
+			
+						})
+					}
+				})
+			},
 			getCurrentPressure()
 			{
 				var pressureText=""
 				this.currentPressureType=0
-				
-				if (typeof this.userInfo){
-					if(this.userInfo.pressureLeft){
-						if (this.userInfo.pressureLeft<10||this.userInfo.pressureRight<10){
+				if (this.userInfo)
+				{
+					if(this.userInfo.pressureLeft)
+					{
+						if (this.userInfo.pressureLeft<10||this.userInfo.pressureRight<10)
+						{
 							this.currentPressureType=2
-						}else if(this.userInfo.pressureLeft>21||this.userInfo.pressureRight>21){
+						}
+						else if(this.userInfo.pressureLeft>21||this.userInfo.pressureRight>21)
+						{
 							this.currentPressureType=3
-						}else
+						}
+						else
 						{
 							this.currentPressureType=1
 						}
@@ -371,7 +403,7 @@
 				}
 				else if(this.currentPressureType==3)
 				{
-					pressureText='左眼:'+ this.userInfo.pressureLeft+'右眼'+this.userInfo.pressureRight+'\n高眼压'
+					pressureText='左眼:'+this.userInfo.pressureLeft+'右眼'+this.userInfo.pressureRight+'\n高眼压'
 				}
 				else
 				{

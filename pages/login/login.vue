@@ -114,7 +114,6 @@
 						userInfo.userName = f.user.userName
 						console.log(userInfo)
 						this.$queue.setData("UserInfo", userInfo)
-			
 					}
 			
 				})
