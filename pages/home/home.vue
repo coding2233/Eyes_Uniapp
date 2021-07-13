@@ -10,11 +10,11 @@
 							<uni-badge :text="item.badge" :type="item.type" />
 						</view>
 						
-						<view v-if="currentPressureType<=1" class="example-body">
-							<text class="text" style="width: 260rpx; font-size: 12px; margin:0 auto; text-align: center;"> {{ getCurrentPressure() }} </text>
+						<view v-if="currentPressureType<=1">
+							<text class="text" style="width: 260rpx; font-size: 12px; margin:0 auto; text-align: center;"> {{ currentPressure }} </text>
 						</view>
-						<view v-else class="example-body">
-							<text class="text" style="color: #FF0000; width: 260rpx; font-size: 12px; margin:0 auto; text-align: center;"> {{ getCurrentPressure() }} </text>
+						<view v-else>
+							<text class="text" style="color: #FF0000; width: 260rpx; font-size: 12px; margin:0 auto; text-align: center;"> {{ currentPressure }} </text>
 						</view>
 						
 					</view>
@@ -133,6 +133,7 @@
 				last_id: "",
 				reload: false,
 				currentPressureType: 0,
+				currentPressure:"",
 			}
 		},
 		onLoad() {
@@ -155,6 +156,7 @@
 		methods: {
 			loadData() {
 				this.userInfo = this.$queue.getData('UserInfo')
+				this.currentPressure=this.getCurrentPressure()
 				this.$Request.get('/system/notice/list').then(
 					res => {
 						if (res.code == 200) {
@@ -364,6 +366,7 @@
 								}
 								this.$queue.setData("UserInfo", userInfo)
 								this.loadData()
+								
 							}
 			
 						})
@@ -515,8 +518,8 @@
 
 
 	.image {
-		width: 100rpx;
-		height: 100rpx;
+		width: 80rpx;
+		height: 80rpx;
 	}
 	
 	.subimgae
