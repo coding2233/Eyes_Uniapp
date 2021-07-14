@@ -77,7 +77,7 @@
 				</view>
 			</view>
 		</neil-modal>
-		<lb-picker ref="picker1" :default-time-limit="1" v-model="recordTime" mode="dateSelector" @change="handleChange"
+		<lb-picker ref="picker1" :default-time-limit="1" v-model="recordTime" mode="dateSelector" :end-date="today" @change="handleChange"
 			@confirm="handleConfirm" @cancel="handleCancel">
 		</lb-picker>
 	</view>
@@ -110,8 +110,12 @@
 					color: '#4cd964',
 					size: '22',
 					type: 'gear-filled'
-				}
+				},
+				today: ""
 			};
+		},
+		onShow() {
+			this.today = this.getTodayDate()
 		},
 		methods: {
 			changeEye(e) {
@@ -203,7 +207,11 @@
 			handleCancel(e) {
 				console.log('cancel::', e)
 			},
-
+			getTodayDate(){
+				let date = new Date()
+				var today = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+				return today
+			},
 		}
 	};
 </script>

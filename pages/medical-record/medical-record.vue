@@ -11,7 +11,7 @@ text-align: end;" v-model="userInfo.nickName" />
 						<input @click="handleTap('picker1')" disabled="true" style="text-align: right;
 text-align: end;" v-model="form.medicalTime" placeholder="请输入"/>
 						<lb-picker ref="picker1" :default-time-limit="50" v-model="form.medicalTime"
-							mode="dateSelector" @change="handleChange" @confirm="handleConfirm" @cancel="handleCancel">
+							mode="dateSelector" :end-date="today" @change="handleChange" @confirm="handleConfirm" @cancel="handleCancel">
 						</lb-picker>
 					</cmd-cell-item>
 					<cmd-cell-item title="MD值" slot-right arrow>
@@ -63,7 +63,8 @@ text-align: end;" v-model="form.remark" placeholder="请输入"/>
 			cmdTransition,
 			cmdCelItem,
 			cmdAvatar,
-			LbPicker
+			LbPicker,
+			today: ""
 		},
 		onLoad() {
 			this.loadData()
@@ -77,7 +78,9 @@ text-align: end;" v-model="form.remark" placeholder="请输入"/>
 				form:{},
 			};
 		},
-
+		onShow() {
+			this.today = this.getTodayDate()
+		},
 		mounted() {},
 
 		methods: {
@@ -135,6 +138,11 @@ text-align: end;" v-model="form.remark" placeholder="请输入"/>
 					}
 
 				})
+			},
+			getTodayDate(){
+				let date = new Date()
+				var today = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
+				return today
 			},
 		}
 	}
