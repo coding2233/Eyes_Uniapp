@@ -229,9 +229,9 @@
 
 	.btn {
 		width: 80%;
-		padding: 10px;
-		margin-top: 30px;
-		margin-bottom: 30px;
+		padding: 2px;
+		margin-top: 20px;
+		margin-bottom: 20px;
 		box-shadow: 0rpx 0rpx 30rpx 0rpx #007AFF;
 		background-image: linear-gradient(to right, #007AFF, #007ABB);
 	}

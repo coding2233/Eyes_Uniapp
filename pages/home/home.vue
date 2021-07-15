@@ -15,7 +15,7 @@
 						
 					</view>
 					<view v-if="index!=1" class="grid-item-box">
-						<image class="subimgae" :src="item.url" mode="aspectFill" />
+						<image class="image" :src="item.url" mode="aspectFill" />
 						<text class="text">{{item.text}}</text>
 						<view v-if="item.badge" class="grid-dot">
 							<uni-badge :text="item.badge" :type="item.type" />
@@ -518,12 +518,6 @@
 		height: 80rpx;
 	}
 	
-	.subimgae
-	{
-		width: 80rpx;
-		height: 80rpx;
-	}
-
 	.text {
 		font-size: 30rpx;
 		margin-top: 10rpx;
@@ -549,7 +543,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		padding: 25px 0;
+		padding: 10px 0;
 	}
 
 	.grid-dot {
@@ -768,10 +762,15 @@
 	.pressureOverflowText
 	{
 		color: #FF0000;
-		width: 260rpx; 
+		width: 260rpx;
 		font-size: 12px; 
 		margin: auto; 
 		text-align: center;
+	}
+	
+	.pressureHighlightText
+	{
+		color: #00BFFF;
 	}
 	
 </style>

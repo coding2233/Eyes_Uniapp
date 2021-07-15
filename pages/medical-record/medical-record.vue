@@ -104,24 +104,38 @@ text-align: end;" v-model="form.remark" placeholder="请输入"/>
 				console.log('cancel::', e)
 			},
 			submit() {
-				this.form.userId = this.userInfo.userId
-				var that = this
-				this.$queue.showLoading("正在修改...")
-				console.log(this.form)
-				this.$Request.post("/system/medicalRecord",
-					this.form
-				).then(res => {
-					console.log(res)
-					uni.hideLoading()
-					if (res.code == 200) {
-						uni.navigateBack({
+				uni.showModal({
+					title:'提示',
+					content:'请确认是否提交记录?',
+					success: (res) => {
+						if (res.confirm){
+							console.log("用户点击确认提交")
+							this.form.userId = this.userInfo.userId
+							var that = this
+							this.$queue.showLoading("正在修改...")
+							console.log(this.form)
+							this.$Request.post("/system/medicalRecord",
+								this.form
+							).then(res => {
+								console.log(res)
+								uni.hideLoading()
+								if (res.code == 200) {
+									uni.navigateBack({
+										
+									})
+								} else {
+									this.$queue.showToast(res.msg)
 							
-						})
-					} else {
-						this.$queue.showToast(res.msg)
-
-					}
+								}
+							})
+						}
+						else if(res.cancel)
+						{
+							console.log("用户点击的取消")
+						}
+					},
 				})
+				
 
 			},
 			getUserInfo() {
