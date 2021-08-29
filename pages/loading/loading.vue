@@ -54,9 +54,6 @@
 								})
 
 							}, 1000)
-
-
-
 						} else {
 							this.$queue.setData('token', res.token);
 							this.$queue.setData("username", this.username);
@@ -89,7 +86,8 @@
 					console.log(f)
 					if (f.code == 200) {
 						console.log(f)
-						let userInfo = f.userInfo
+						// let userInfo = f.userInfo
+						let userInfo = {}
 						userInfo.userId = f.user.userId
 						userInfo.userName = f.user.userName
 						console.log(userInfo)

@@ -347,7 +347,8 @@
 			getUserInfo() {
 				this.$Request.get('/getInfo').then(f => {
 					if (f.code == 200) {
-						let userInfo = f.userInfo
+						console.log(f)
+						let userInfo = {}
 						userInfo.userId = f.user.userId
 						userInfo.userName = f.user.userName
 						this.$Request.get("/system/record/getInfoById/" + userInfo.userId).then(res => {

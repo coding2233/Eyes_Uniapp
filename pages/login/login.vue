@@ -77,7 +77,7 @@
 							this.$queue.setData('token', res.token);
 							this.$queue.setData("username", this.username);
 							this.$queue.setData("password", this.password);
-							this.getUserInfo()
+							// this.getUserInfo()
 							uni.hideLoading();
 							uni.switchTab({
 								url: "../home/home"

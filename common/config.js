@@ -3,8 +3,8 @@ const ROOTPATH2 = "http://192.168.0.101:8080";
 const ROOTPATH3 = "http://localhost:8080";
 const ROOTPATH4 = "http://1.14.68.222:8080";
 module.exports = {
-	APIHOST: ROOTPATH4,
-	ROOTPATH: ROOTPATH4,	
+	APIHOST: ROOTPATH3,
+	ROOTPATH: ROOTPATH3,	
 };
  
  

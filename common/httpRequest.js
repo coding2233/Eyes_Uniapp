@@ -257,6 +257,7 @@ module.exports = {
 
 	get: function(url, data, header) {
 		let token = uni.getStorageSync("token");
+		console.log(token)
 		header = header || 'application/json;charset=utf-8';
 		url = this.config("APIHOST") + url;
 		if (token) {
