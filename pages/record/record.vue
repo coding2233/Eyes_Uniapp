@@ -26,6 +26,17 @@
 		</button>
 		<neil-modal :show="showModal" @close="closeModal()" @cancel="cancelModal()" @confirm="confirmModal('showModal')"
 			title="请输入视力">
+			
+			<view class="uni-list">
+				 <radio-group @change="visionTypeChange">
+					<label class="uni-list-cell uni-list-cell-pd" v-for="(item, index) in visionType" :key="item.value">
+						<view>
+							<radio :value="item.value" :checked="index === current" />
+						</view>
+						<view>{{item.name}}</view>
+					</label>
+				</radio-group>
+			</view>
 			<view class="input-view">
 				<view class="input-name">
 					<view style="font-size: 32upx;">左眼视力</view>
@@ -111,7 +122,9 @@
 					size: '22',
 					type: 'gear-filled'
 				},
-				today: ""
+				today: "",
+				visionType:[{value:'UCVA',name:'裸眼'},{value:'CVA',name:'矫正视力'}
+				]
 			};
 		},
 		onShow() {
@@ -212,6 +225,15 @@
 				var today = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
 				return today
 			},
+			//视力类型
+			visionTypeChange(evt) {
+				 for (let i = 0; i < this.items.length; i++) {
+					if (this.items[i].value === evt.detail.value) {
+						this.current = i;
+						break;
+					}
+				}
+			}
 		}
 	};
 </script>

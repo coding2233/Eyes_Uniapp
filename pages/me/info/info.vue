@@ -98,7 +98,7 @@ text-align: end;" v-model="userInfo.history" />
 				this.$Request.put("/system/info",
 					this.userInfo
 				).then(res => {
-					console.log(res)
+					console.log(this.userInfo,res)
 					uni.hideLoading()
 					if (res.code == 200) {
 						this.$queue.setData("UserInfo", this.userInfo)

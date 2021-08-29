@@ -59,7 +59,11 @@
 			loadData(){
 				let userId = this.$queue.getData('UserInfo').userId
 				this.$Request.get("/system/record/getInfoById/"+userId).then(res =>{
-					for(let i=0;i<4;i++){
+					console.log(res)
+					let dataLength = res.data.length
+					if(dataLength<4)
+					return;
+					for(let i=0;i<dataLength;i++){
 						this.Line.categories[i] = res.data[res.data.length -4 +i].recordTime
 						this.Line.series[0].data[i] = res.data[res.data.length -4 +i].pressureRight
 						this.Line.series[1].data[i] = res.data[res.data.length -4 +i].pressureLeft
