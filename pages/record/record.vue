@@ -27,15 +27,19 @@
 		<neil-modal :show="showModal" @close="closeModal()" @cancel="cancelModal()" @confirm="confirmModal('showModal')"
 			title="请输入视力">
 			
-			<view class="uni-list">
-				 <radio-group @change="visionTypeChange">
-					<label class="uni-list-cell uni-list-cell-pd" v-for="(item, index) in visionType" :key="item.value">
-						<view>
-							<radio :value="item.value" :checked="index === current" />
-						</view>
-						<view>{{item.name}}</view>
-					</label>
-				</radio-group>
+			<view>
+				 <view class="uni-list-cell uni-list-cell-pd">
+					  <view class="uni-list-cell-db">
+						  <view v-if="currentVisionType" >
+						  					 <label>裸眼</label>
+						  </view>
+						  <view v-else>
+						  					 <label>矫正</label>
+						  </view>
+					  </view>
+					  <switch checked @change="visionTypeChange" />
+				</view>
+				 
 			</view>
 			<view class="input-view">
 				<view class="input-name">
@@ -123,8 +127,8 @@
 					type: 'gear-filled'
 				},
 				today: "",
-				visionType:[{value:'UCVA',name:'裸眼'},{value:'CVA',name:'矫正视力'}
-				]
+				visionType:[{value:'UCVA',name:'裸眼'},{value:'CVA',name:'矫正视力'}],
+				currentVisionType: true
 			};
 		},
 		onShow() {
@@ -226,13 +230,18 @@
 				return today
 			},
 			//视力类型
-			visionTypeChange(evt) {
-				 for (let i = 0; i < this.items.length; i++) {
-					if (this.items[i].value === evt.detail.value) {
-						this.current = i;
-						break;
-					}
-				}
+			// visionTypeChange(evt) {
+			// 	 for (let i = 0; i < this.items.length; i++) {
+			// 		if (this.items[i].value === evt.detail.value) {
+			// 			this.currentVisionType = i;
+			// 			break;
+			// 		}
+			// 	}
+			// },
+			visionTypeChange(evt){
+				console.log('switch1 发生 change 事件，携带值为', evt.target.value)
+				this.currentVisionType= evt.target.value
+				// visionTypeChange=evt.target.value
 			}
 		}
 	};
