@@ -28,18 +28,7 @@
 			title="请输入视力">
 			
 			<view>
-				 <view class="uni-list-cell uni-list-cell-pd">
-					  <view class="uni-list-cell-db">
-						  <view v-if="currentVisionType" >
-						  					 <label>裸眼</label>
-						  </view>
-						  <view v-else>
-						  					 <label>矫正</label>
-						  </view>
-					  </view>
-					  <switch checked @change="visionTypeChange" />
-				</view>
-				 
+				<u-subsection :list="visionType" :current="currentVisionType"></u-subsection>
 			</view>
 			<view class="input-view">
 				<view class="input-name">
@@ -51,9 +40,18 @@
 					<input type="number" v-model="visionRight" placeholder="请输入右眼视力" />
 				</view>
 			</view>
+			<u-section title="历史记录" color="#2979ff" sub-title="查看更多"></u-section>
+			
 		</neil-modal>
 		<neil-modal :show="showModal1" @close="closeModal()" @cancel="cancelModal()"
 			@confirm="confirmModal('showModal1')" title="请输入眼压">
+			<view style="display: flex; justify-content: center;">
+				<u-button @click="OnEyePressure" size="medium">选择日期</u-button>
+				<view v-if="eyePressurePickerShow">
+					<u-picker mode="time" v-model='eyePressurePickerShow' :params="params"></u-picker>
+				</view>
+				
+			</view>
 			<view class="input-view">
 				<view class="input-name">
 					<view style="font-size: 32upx;">左眼眼压</view>
@@ -64,6 +62,7 @@
 					<input type="number" v-model="pressureRight" placeholder="请输入15~18mmHg" />
 				</view>
 			</view>
+			<u-section title="历史记录" color="#2979ff" sub-title="查看更多"></u-section>
 		</neil-modal>
 		<neil-modal :show="showModal2" @close="closeModal()" @cancel="cancelModal()"
 			@confirm="confirmModal('showModal2')" title="请记录运动">
@@ -73,6 +72,7 @@
 					<input v-model="motion" placeholder="请输入最近运动情况" />
 				</view>
 			</view>
+			<u-section title="历史记录" color="#2979ff" sub-title="查看更多"></u-section>
 		</neil-modal>
 		<neil-modal :show="showModal3" @close="closeModal()" @cancel="cancelModal()"
 			@confirm="confirmModal('showModal3')" title="请记录用药情况">
@@ -82,6 +82,7 @@
 					<input v-model="medication" placeholder="请输入用药情况" />
 				</view>
 			</view>
+			<u-section title="历史记录" color="#2979ff" sub-title="查看更多"></u-section>
 		</neil-modal>
 		<neil-modal :show="showModal4" @close="closeModal()" @cancel="cancelModal()"
 			@confirm="confirmModal('showModal4')" title="请记录情绪">
@@ -91,6 +92,7 @@
 					<input v-model="emotion" placeholder="请记录情绪" />
 				</view>
 			</view>
+			<u-section title="历史记录" color="#2979ff" sub-title="查看更多"></u-section>
 		</neil-modal>
 		<lb-picker ref="picker1" :default-time-limit="1" v-model="recordTime" mode="dateSelector" :end-date="today" @change="handleChange"
 			@confirm="handleConfirm" @cancel="handleCancel">
@@ -127,8 +129,16 @@
 					type: 'gear-filled'
 				},
 				today: "",
-				visionType:[{value:'UCVA',name:'裸眼'},{value:'CVA',name:'矫正视力'}],
-				currentVisionType: true
+				visionType:[{name:'矫正'},{name:'裸眼'}],
+				currentVisionType: 1,
+				params: {
+					year: true,
+					month: true,
+					day: true,
+					hour: true,
+					minute: true,
+				},
+				eyePressurePickerShow: false
 			};
 		},
 		onShow() {
@@ -242,6 +252,10 @@
 				console.log('switch1 发生 change 事件，携带值为', evt.target.value)
 				this.currentVisionType= evt.target.value
 				// visionTypeChange=evt.target.value
+			},
+			OnEyePressure(){
+				console.log(this.eyePressurePickerShow)
+				this.eyePressurePickerShow=!this.eyePressurePickerShow;
 			}
 		}
 	};
