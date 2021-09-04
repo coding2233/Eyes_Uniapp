@@ -100,7 +100,19 @@
 			<view class="input-view">
 				<view class="input-name">
 					<view style="font-size: 32upx;">运动</view>
-					<input v-model="motion" placeholder="请输入最近运动情况" />
+					<input v-model="motion" placeholder="请输入运动类型" />
+				</view>
+			</view>
+			<view class="input-view">
+				<view class="input-name">
+					<view style="font-size: 32upx;">运动时间</view>
+					<input v-model="motion" placeholder="请输入运动时间" />
+				</view>
+			</view>
+			<view class="input-view">
+				<view class="input-name">
+					<view style="font-size: 32upx;">运动日期</view>
+					<input v-model="motion" placeholder="请选择运动日期" />
 				</view>
 			</view>
 			<u-section :title="getHistoryTitle()" color="#2979ff" sub-title="查看更多"></u-section>
