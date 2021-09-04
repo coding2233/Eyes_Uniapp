@@ -1,60 +1,64 @@
 <template>
 	<view class="view">
-		<button class="btn" type="primary" @click="changeEye('showModal')">
-			<view style="font-size: 48upx;">视力</view>
-			<view style="font-size: 30upx;" v-if="lastHistory">
-				左眼视力:{{lastHistory.visionLeft}}
-				右眼视力:{{lastHistory.visionRight}}
-			</view>
-			<view style="font-size: 30upx;" v-else>
-				暂无历史记录
-			</view>
-		</button>
+		
+		<view>
+			<button class="btn" type="primary" @click="changeEye('showModal')">
+				<view style="font-size: 48upx;">视力</view>
+				<view style="font-size: 30upx;" v-if="lastHistory">
+					左眼视力:{{lastHistory.visionLeft}}
+					右眼视力:{{lastHistory.visionRight}}
+				</view>
+				<view style="font-size: 30upx;" v-else>
+					暂无历史记录
+				</view>
+			</button>
 
-		<button class="btn" type="primary" @click="changeEye('showModal1')">
-			<view style="font-size: 48upx;">眼压</view>
-			<!-- <view style="font-size: 30upx;">{{pressureLeft?('左眼眼压:'+pressureLeft+'右眼眼压:'+pressureRight):"监测数据"}}</view> -->
-			<view style="font-size: 30upx;" v-if="lastHistory">
-				左眼眼压:{{lastHistory.pressureLeft}}
-				右眼眼压:{{lastHistory.pressureRight}}
-			</view>
-			<view style="font-size: 30upx;" v-else>
-				暂无历史记录
-			</view>
-		</button>
-		<button class="btn" type="primary" @click="changeEye('showModal2')">
-			<view style="font-size: 48upx;">运动</view>
-			<!-- <view style="font-size: 30upx;">{{motion?motion:"(记录运动)"}}</view> -->
-			<view style="font-size: 30upx;" v-if="lastHistory">
-				{{lastHistory.motion}}
-			</view>
-			<view style="font-size: 30upx;" v-else>
-				暂无历史记录
-			</view>
-		</button>
-		<button class="btn" type="primary" @click="changeEye('showModal3')">
-			<view style="font-size: 48upx;">用药</view>
-			<!-- <view style="font-size: 30upx;">{{medication?medication:"(记录每日用药及不良反应)"}}</view> -->
-			<view style="font-size: 30upx;" v-if="lastHistory">
-				{{lastHistory.medication}}
-			</view>
-			<view style="font-size: 30upx;" v-else>
-				暂无历史记录
-			</view>
-		</button>
-		<button class="btn" type="primary" @click="changeEye('showModal4')">
-			<view style="font-size: 48upx;">情绪</view>
-			<!-- <view style="font-size: 30upx;">{{emotion?emotion:"(记录情绪)"}}</view> -->
-			<view style="font-size: 30upx;" v-if="lastHistory">
-				{{lastHistory.emotion}}
-			</view>
-			<view style="font-size: 30upx;" v-else>
-				暂无历史记录
-			</view>
-		</button>
-		<button class="btn" type="primary" @click="handleTap('picker1')">
-			<view style="font-size: 48upx;">添加记录</view>
-		</button>
+			<button class="btn" type="primary" @click="changeEye('showModal1')">
+				<view style="font-size: 48upx;">眼压</view>
+				<!-- <view style="font-size: 30upx;">{{pressureLeft?('左眼眼压:'+pressureLeft+'右眼眼压:'+pressureRight):"监测数据"}}</view> -->
+				<view style="font-size: 30upx;" v-if="lastHistory">
+					左眼眼压:{{lastHistory.pressureLeft}}
+					右眼眼压:{{lastHistory.pressureRight}}
+				</view>
+				<view style="font-size: 30upx;" v-else>
+					暂无历史记录
+				</view>
+			</button>
+			<button class="btn" type="primary" @click="changeEye('showModal2')">
+				<view style="font-size: 48upx;">运动</view>
+				<!-- <view style="font-size: 30upx;">{{motion?motion:"(记录运动)"}}</view> -->
+				<view style="font-size: 30upx;" v-if="lastHistory">
+					{{lastHistory.motion}}
+				</view>
+				<view style="font-size: 30upx;" v-else>
+					暂无历史记录
+				</view>
+			</button>
+			<button class="btn" type="primary" @click="changeEye('showModal3')">
+				<view style="font-size: 48upx;">用药</view>
+				<!-- <view style="font-size: 30upx;">{{medication?medication:"(记录每日用药及不良反应)"}}</view> -->
+				<view style="font-size: 30upx;" v-if="lastHistory">
+					{{lastHistory.medication}}
+				</view>
+				<view style="font-size: 30upx;" v-else>
+					暂无历史记录
+				</view>
+			</button>
+			<button class="btn" type="primary" @click="changeEye('showModal4')">
+				<view style="font-size: 48upx;">情绪</view>
+				<!-- <view style="font-size: 30upx;">{{emotion?emotion:"(记录情绪)"}}</view> -->
+				<view style="font-size: 30upx;" v-if="lastHistory">
+					{{lastHistory.emotion}}
+				</view>
+				<view style="font-size: 30upx;" v-else>
+					暂无历史记录
+				</view>
+			</button>
+			<button class="btn" type="primary" @click="handleTap('picker1')">
+				<view style="font-size: 48upx;">添加记录</view>
+			</button>
+		</view>
+		
 		<neil-modal :show="showModal" @close="closeModal()" @cancel="cancelModal()" @confirm="confirmModal('showModal')"
 			title="请输入视力">
 			
@@ -77,11 +81,7 @@
 		<neil-modal :show="showModal1" @close="closeModal()" @cancel="cancelModal()"
 			@confirm="confirmModal('showModal1')" title="请输入眼压">
 			<view style="display: flex; justify-content: center;">
-				<u-button @click="OnEyePressure" size="medium">选择日期</u-button>
-				<view v-if="eyePressurePickerShow">
-					<u-picker mode="time" v-model='eyePressurePickerShow' :params="params"></u-picker>
-				</view>
-				
+				<u-button @click="OnEyePressure" size="medium"> {{eyePressureTime}} </u-button>
 			</view>
 			<view class="input-view">
 				<view class="input-name">
@@ -128,6 +128,10 @@
 		<lb-picker ref="picker1" :default-time-limit="1" v-model="recordTime" mode="dateSelector" :end-date="today" @change="handleChange"
 			@confirm="handleConfirm" @cancel="handleCancel">
 		</lb-picker>
+		
+		<view>
+				<u-picker mode="time" v-model="eyePressurePickerShow" :params="params" @confirm="OnEyePressureDateConfirm"></u-picker>
+		</view>
 	</view>
 </template>
 
@@ -172,11 +176,13 @@
 				eyePressurePickerShow: false,
 				history:{},
 				lastHistory:null,
+				eyePressureTime:'选择日期'
 			};
 		},
 		onShow() {
 			this.today = this.getTodayDate()
 			this.onGetHistory()
+			// this.eyePressureTime=new Date().string()
 		},
 		methods: {
 			changeEye(e) {
@@ -315,6 +321,11 @@
 			getHistoryTitle(){
 				let length = this.history.length
 				return "历史记录 ("+length+")"
+			},
+			//选择眼压日期
+			OnEyePressureDateConfirm(e){
+				this.eyePressureTime=e.year+"-"+e.month+"-"+e.day+" "+e.hour+":"+e.minute
+				console.log("眼压日期:"+JSON.stringify(e))
 			}
 		}
 	};
