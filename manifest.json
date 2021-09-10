@@ -75,6 +75,9 @@
         "domain" : "",
         "router" : {
             "base" : "/app/"
+        },
+        "devServer" : {
+            "port" : 2080
         }
     }
 }

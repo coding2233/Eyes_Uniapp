@@ -93,7 +93,7 @@
 					<input type="number" v-model="pressureRight" placeholder="请输入15~18mmHg" />
 				</view>
 			</view>
-			<u-section :title="getHistoryTitle()" color="#2979ff" sub-title="查看更多"></u-section>
+			<u-section :title="getHistoryTitle()" color="#2979ff" sub-title="查看更多" @click="onSelectEyePressureHistory"></u-section>
 		</neil-modal>
 		<neil-modal :show="showModal2" @close="closeModal()" @cancel="cancelModal()"
 			@confirm="confirmModal('showModal2')" title="请记录运动">
@@ -338,7 +338,13 @@
 			OnEyePressureDateConfirm(e){
 				this.eyePressureTime=e.year+"-"+e.month+"-"+e.day+" "+e.hour+":"+e.minute
 				console.log("眼压日期:"+JSON.stringify(e))
-			}
+			},
+			//选择历史记录
+			onSelectEyePressureHistory(e){
+				uni.navigateTo({
+					url:"../Intraocular-pressure/Intraocular-pressure"
+				})
+			},
 		}
 	};
 </script>

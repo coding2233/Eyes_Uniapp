@@ -1,10 +1,20 @@
 <template>
 	<view class="content">
-		<view style="background-color: #FFFFFF;">
+	<!-- 	<view style="background-color: #FFFFFF;">
 			<qiun-title-bar title="眼压折线图" />
 			<view class="charts-box">
 				<qiun-data-charts type="area" :chartData="chartsDataLine1" />
 			</view>
+		</view> -->
+		<view style="background-color: #FFFFFF;">
+		<qiun-title-bar title="眼压折线图" />
+		<view class="charts-box">
+		  <qiun-data-charts
+		    type="line"
+		    :chartData="chartData"
+		    background="none"
+		  />
+		</view>
 		</view>
 		<uni-section></uni-section>
 		<view class="itme-box">
@@ -44,11 +54,17 @@
 						"data": [0, 0, 0, 0]
 					}]
 				},
+				chartData:{
+				  categories:["1","2","3"],
+				  series:[{"name":"xxx","data":[14,245,523,21]}],
+				},
 				medication:[],
 				remark:[]
 			}
 		},
 		onLoad(){
+		},
+		onShow() {
 			this.loadData()
 		},
 		onReady() {
@@ -59,22 +75,40 @@
 			loadData(){
 				let userId = this.$queue.getData('UserInfo').userId
 				this.$Request.get("/system/record/getInfoById/"+userId).then(res =>{
-					console.log(res)
+					console.log(JSON.stringify(res))
 					let dataLength = res.data.length
-					if(dataLength<4)
+					if(dataLength<1)
 					return;
+					let resDatas= res.data
+					let categories=[]
+					let leftSeries=[]
+					let rightSeries=[]
+					
 					for(let i=0;i<dataLength;i++){
-						this.Line.categories[i] = res.data[res.data.length -4 +i].recordTime
-						this.Line.series[0].data[i] = res.data[res.data.length -4 +i].pressureRight
-						this.Line.series[1].data[i] = res.data[res.data.length -4 +i].pressureLeft
-						this.medication[i] = res.data[res.data.length -4 +i].medication
-						if(res.data[res.data.length -4 +i].motion!=""&&res.data[res.data.length -4 +i].emotion!=""){
-							this.remark[i] = res.data[res.data.length -4 +i].motion +"、"+ res.data[res.data.length -4 +i].emotion
-						}else{
-							this.remark[i] = res.data[res.data.length -4 +i].motion + res.data[res.data.length -4 +i].emotion
-						}
-						
+						let resData = resDatas[i]
+						categories.push(resData.recordTime)
+						leftSeries.push(resData.pressureLeft)
+						rightSeries.push(resData.pressureRight)
 					}
+					
+					
+					this.chartData.categories=categories
+					let series = []
+					series.push({"name":"左眼","data":leftSeries})
+					series.push({"name":"右眼","data":rightSeries})
+					this.chartData.series=series
+					// for(let i=0;i<dataLength;i++){
+					// 	this.Line.categories[i] = res.data[res.data.length -4 +i].recordTime
+					// 	this.Line.series[0].data[i] = res.data[res.data.length -4 +i].pressureRight
+					// 	this.Line.series[1].data[i] = res.data[res.data.length -4 +i].pressureLeft
+					// 	this.medication[i] = res.data[res.data.length -4 +i].medication
+					// 	if(res.data[res.data.length -4 +i].motion!=""&&res.data[res.data.length -4 +i].emotion!=""){
+					// 		this.remark[i] = res.data[res.data.length -4 +i].motion +"、"+ res.data[res.data.length -4 +i].emotion
+					// 	}else{
+					// 		this.remark[i] = res.data[res.data.length -4 +i].motion + res.data[res.data.length -4 +i].emotion
+					// 	}
+						
+					// }
 				})
 			},
 			getServerData() {
@@ -150,6 +184,10 @@
 			height: 300px;
 		}
 	}
-
+	
+	.charts-box{
+	  width: 100%;
+	  height:300px;
+	}
 	/* 示例样式结束 */
 </style>
