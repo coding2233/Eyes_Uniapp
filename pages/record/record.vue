@@ -1,149 +1,111 @@
 <template>
 	<view class="view">
-		
-		<view>
-			<button class="btn" type="primary" @click="changeEye('showModal')">
-				<view style="font-size: 48upx;">视力</view>
-				<view style="font-size: 30upx;" v-if="lastHistory">
-					左眼视力:{{lastHistory.visionLeft}}
-					右眼视力:{{lastHistory.visionRight}}
-				</view>
-				<view style="font-size: 30upx;" v-else>
-					暂无历史记录
-				</view>
-			</button>
-
-			<button class="btn" type="primary" @click="changeEye('showModal1')">
-				<view style="font-size: 48upx;">眼压</view>
-				<!-- <view style="font-size: 30upx;">{{pressureLeft?('左眼眼压:'+pressureLeft+'右眼眼压:'+pressureRight):"监测数据"}}</view> -->
-				<view style="font-size: 30upx;" v-if="lastHistory">
-					左眼眼压:{{lastHistory.pressureLeft}}
-					右眼眼压:{{lastHistory.pressureRight}}
-				</view>
-				<view style="font-size: 30upx;" v-else>
-					暂无历史记录
-				</view>
-			</button>
-			<button class="btn" type="primary" @click="changeEye('showModal2')">
-				<view style="font-size: 48upx;">运动</view>
-				<!-- <view style="font-size: 30upx;">{{motion?motion:"(记录运动)"}}</view> -->
-				<view style="font-size: 30upx;" v-if="lastHistory">
-					{{lastHistory.motion}}
-				</view>
-				<view style="font-size: 30upx;" v-else>
-					暂无历史记录
-				</view>
-			</button>
-			<button class="btn" type="primary" @click="changeEye('showModal3')">
-				<view style="font-size: 48upx;">用药</view>
-				<!-- <view style="font-size: 30upx;">{{medication?medication:"(记录每日用药及不良反应)"}}</view> -->
-				<view style="font-size: 30upx;" v-if="lastHistory">
-					{{lastHistory.medication}}
-				</view>
-				<view style="font-size: 30upx;" v-else>
-					暂无历史记录
-				</view>
-			</button>
-			<button class="btn" type="primary" @click="changeEye('showModal4')">
-				<view style="font-size: 48upx;">情绪</view>
-				<!-- <view style="font-size: 30upx;">{{emotion?emotion:"(记录情绪)"}}</view> -->
-				<view style="font-size: 30upx;" v-if="lastHistory">
-					{{lastHistory.emotion}}
-				</view>
-				<view style="font-size: 30upx;" v-else>
-					暂无历史记录
-				</view>
-			</button>
-			<button class="btn" type="primary" @click="handleTap('picker1')">
-				<view style="font-size: 48upx;">添加记录</view>
+		<view v-for="item in recordButtons">
+			<button class="btn" type="primary" @click="onRecordButtonClick(item)"> 
+			<view style="font-size: 48upx;">{{item.name}}</view>
+			<view style="font-size: 30upx;">
+				{{item.desc}}
+			</view>
 			</button>
 		</view>
 		
-		<neil-modal :show="showModal" @close="closeModal()" @cancel="cancelModal()" @confirm="confirmModal('showModal')"
-			title="请输入视力">
-			
-			<view>
-				<u-subsection :list="visionType" :current="currentVisionType"></u-subsection>
-			</view>
-			<view class="input-view">
-				<view class="input-name">
-					<view style="font-size: 32upx;">左眼视力</view>
-					<input type="number" v-model="visionLeft" placeholder="请输入左眼视力" />
+		<button class="btn" type="primary" @click="handleTap('picker1')">
+			<view style="font-size: 48upx;">添加记录</view>
+		</button>
+		
+		<view v-if="selectRecordButton!=null">
+			<neil-modal :show="showNeilModalGlobal" @close="closeModal()" @cancel="cancelModal()"
+				@confirm="confirmModal()" :title="selectRecordButton.modalName">
+				<view v-if="selectRecordButton.name==='视力'">
+					<view>
+						<u-subsection :list="visionType" :current="currentVisionType"></u-subsection>
+					</view>
+					<view class="input-view">
+						<view class="input-name">
+							<view style="font-size: 32upx;">左眼视力</view>
+							<input type="number" v-model="selectRecordButton.data.visionLeft" placeholder="请输入左眼视力" />
+						</view>
+						<view class="input-password">
+							<view style="font-size: 32upx;">右眼视力</view>
+							<input type="number" v-model="selectRecordButton.data.visionRight" placeholder="请输入右眼视力" />
+						</view>
+					</view>
 				</view>
-				<view class="input-password">
-					<view style="font-size: 32upx;">右眼视力</view>
-					<input type="number" v-model="visionRight" placeholder="请输入右眼视力" />
+				<view v-else-if="selectRecordButton.name==='眼压'">
+					<view style="display: flex; justify-content: center;">
+						<u-button @click="OnEyePressure" size="medium"> {{eyePressureTime}} </u-button>
+					</view>
+					<view class="input-view">
+						<view class="input-name">
+							<view style="font-size: 32upx;">左眼眼压</view>
+							<input type="number" v-model="selectRecordButton.data.pressureLeft" placeholder="请输入15~18mmHg" />
+						</view>
+						<view class="input-name">
+							<view style="font-size: 32upx;">右眼眼压</view>
+							<input type="number" v-model="selectRecordButton.data.pressureRight" placeholder="请输入15~18mmHg" />
+						</view>
+					</view>
 				</view>
-			</view>
-			<u-section :title="getHistoryTitle()" color="#2979ff" sub-title="查看更多"></u-section>
-			
-		</neil-modal>
-		<neil-modal :show="showModal1" @close="closeModal()" @cancel="cancelModal()"
-			@confirm="confirmModal('showModal1')" title="请输入眼压">
-			<view style="display: flex; justify-content: center;">
-				<u-button @click="OnEyePressure" size="medium"> {{eyePressureTime}} </u-button>
-			</view>
-			<view class="input-view">
-				<view class="input-name">
-					<view style="font-size: 32upx;">左眼眼压</view>
-					<input type="number" v-model="pressureLeft" placeholder="请输入15~18mmHg" />
+				<view v-else-if="selectRecordButton.name==='运动'">
+					<view class="input-view">
+						<view class="input-name">
+							<view style="font-size: 32upx;">运动</view>
+							<input v-model="selectRecordButton.data.motion" placeholder="请输入运动类型" />
+						</view>
+					</view>
+					<view class="input-view">
+						<view class="input-name">
+							<view style="font-size: 32upx;">运动时长</view>
+							<input v-model="selectRecordButton.data.duration" placeholder="请输入运动时长" />
+						</view>
+					</view>
+					<view class="input-view">
+						<view class="input-name">
+							<view style="font-size: 32upx;">运动日期</view>
+							<input v-model="selectRecordButton.data.dateTime" placeholder="请选择运动日期" />
+						</view>
+					</view>
 				</view>
-				<view class="input-name">
-					<view style="font-size: 32upx;">右眼眼压</view>
-					<input type="number" v-model="pressureRight" placeholder="请输入15~18mmHg" />
+				<view v-else-if="selectRecordButton.name==='用药'">
+					<view class="input-view">
+						<view class="input-name">
+							<view style="font-size: 32upx;">用药</view>
+							<input v-model="selectRecordButton.data.medication" placeholder="请输入用药情况" />
+						</view>
+					</view>
+					<view class="input-view">
+						<view class="input-name">
+							<view style="font-size: 32upx;">用药时间</view>
+							<input v-model="selectRecordButton.data.duration" placeholder="请输入用药时间" />
+						</view>
+					</view>
 				</view>
-			</view>
-			<u-section :title="getHistoryTitle()" color="#2979ff" sub-title="查看更多" @click="onSelectEyePressureHistory"></u-section>
-		</neil-modal>
-		<neil-modal :show="showModal2" @close="closeModal()" @cancel="cancelModal()"
-			@confirm="confirmModal('showModal2')" title="请记录运动">
-			<view class="input-view">
-				<view class="input-name">
-					<view style="font-size: 32upx;">运动</view>
-					<input v-model="motion" placeholder="请输入运动类型" />
+				<view v-else-if="selectRecordButton.name==='情绪'">
+					<view class="input-view">
+						<view class="input-name">
+							<view style="font-size: 32upx;">情绪</view>
+							<input v-model="selectRecordButton.data.emotion" placeholder="请记录情绪" />
+						</view>
+					</view>
+					<view class="input-view">
+						<view class="input-name">
+							<view style="font-size: 32upx;">记录时间</view>
+							<input v-model="selectRecordButton.data.dateTime" placeholder="请选择记录日期" />
+						</view>
+					</view>
 				</view>
-			</view>
-			<view class="input-view">
-				<view class="input-name">
-					<view style="font-size: 32upx;">运动时间</view>
-					<input v-model="motion" placeholder="请输入运动时间" />
-				</view>
-			</view>
-			<view class="input-view">
-				<view class="input-name">
-					<view style="font-size: 32upx;">运动日期</view>
-					<input v-model="motion" placeholder="请选择运动日期" />
-				</view>
-			</view>
-			<u-section :title="getHistoryTitle()" color="#2979ff" sub-title="查看更多"></u-section>
-		</neil-modal>
-		<neil-modal :show="showModal3" @close="closeModal()" @cancel="cancelModal()"
-			@confirm="confirmModal('showModal3')" title="请记录用药情况">
-			<view class="input-view">
-				<view class="input-name">
-					<view style="font-size: 32upx;">用药</view>
-					<input v-model="medication" placeholder="请输入用药情况" />
-				</view>
-			</view>
-			<u-section :title="getHistoryTitle()" color="#2979ff" sub-title="查看更多"></u-section>
-		</neil-modal>
-		<neil-modal :show="showModal4" @close="closeModal()" @cancel="cancelModal()"
-			@confirm="confirmModal('showModal4')" title="请记录情绪">
-			<view class="input-view">
-				<view class="input-name">
-					<view style="font-size: 32upx;">情绪</view>
-					<input v-model="emotion" placeholder="请记录情绪" />
-				</view>
-			</view>
-			<u-section :title="getHistoryTitle()" color="#2979ff" sub-title="查看更多"></u-section>
-		</neil-modal>
+				
+				<u-section :title="getHistoryTitle()" color="#2979ff" sub-title="查看更多" @click="onSelectEyePressureHistory"></u-section>
+			</neil-modal>
+		</view>
+		
 		<lb-picker ref="picker1" :default-time-limit="1" v-model="recordTime" mode="dateSelector" :end-date="today" @change="handleChange"
 			@confirm="handleConfirm" @cancel="handleCancel">
 		</lb-picker>
-		
 		<view>
 				<u-picker mode="time" v-model="eyePressurePickerShow" :params="params" @confirm="OnEyePressureDateConfirm"></u-picker>
-		</view>
+		</view> 
+		
 	</view>
 </template>
 
@@ -157,19 +119,22 @@
 		},
 		data() {
 			return {
-				visionLeft: '',
-				visionRight: '',
-				pressureLeft: '',
-				pressureRight: '',
-				motion: '',
-				medication: '',
-				emotion: '',
+				recordButtons:[
+					{name:'视力',desc:'暂无历史记录',modalName:'请输入视力',data:{visionLeft:0,visionRight:0}},
+					{name:'眼压',desc:'暂无历史记录',modalName:'请输入眼压',data:{pressureLeft:0,pressureRight:0,dateTime:"1997-01-01"}},
+					{name:'运动',desc:'暂无历史记录',modalName:'请记录运动',data:{motion:"散步",duration:0,dateTime:"1997-01-01",remark:""}},
+					{name:'用药',desc:'暂无历史记录',modalName:'请记录用药',data:{medication:"",time:[],adr:"",remark:""}},
+					{name:'情绪',desc:'暂无历史记录',modalName:'请记录情绪',data:{emotion:"",dateTime:"1997-01-01"}}],
+				selectRecordButton: null,
+				showNeilModal: {
+					modalVision:false,
+					modalEyePressure:false,
+					modalExercise:false,
+					modalPharmacy:false,
+					modalEmotion:false,
+				},
+				showNeilModalGlobal:false,
 				recordTime: '',
-				showModal: false,
-				showModal1: false,
-				showModal2: false,
-				showModal3: false,
-				showModal4: false,
 				extraIcon: {
 					color: '#4cd964',
 					size: '22',
@@ -187,57 +152,32 @@
 				},
 				eyePressurePickerShow: false,
 				history:{},
-				lastHistory:null,
 				eyePressureTime:'选择日期'
 			};
 		},
 		onShow() {
 			this.today = this.getTodayDate()
 			this.onGetHistory()
-			// this.eyePressureTime=new Date().string()
 		},
 		methods: {
-			changeEye(e) {
-				this[e] = true
-			},
 			closeModal() {
-				this.showModal = false
-				this.showModal1 = false
-				this.showModal2 = false
-				this.showModal3 = false
-				this.showModal4 = false
+				this.showNeilModalGlobal=false
 			},
 			cancelModal(e) {
-				if (e == 'showModal') {
-					this.visionLeft = ''
-					this.visionRight = ''
-				} else if (e == 'showModal1') {
-					this.pressureLeft = ''
-					this.pressureRight = ''
-				} else if (e == 'showModal2') {
-					this.motion = ''
-				} else if (e == 'showModal3') {
-					this.medication = ''
-				} else if (e == 'showModal4') {
-					this.emotion = ''
+				let recordButton=this.selectRecordButton
+				if(recordButton.name=="视力"){
+					recordButton.data.visionLeft=0
+					recordButton.data.visionRight=0
+				}
+				else if(recordButton.name=="眼压"){
+					recordButton.data.pressureLeft=0
+					recordButton.data.pressureRight=0
 				}
 			},
 			confirmModal(e) {
-				if (e == 'showModal') {
-					if (!this.visionLeft || !this.visionRight) {
-						this.visionLeft = ''
-						this.visionRight = ''
-						this.$queue.showToast("记录失败！左右眼视力不能为空")
-					}
-
-				} else if (e == 'showModal1') {
-					if (!this.pressureLeft || !this.pressureRight) {
-						this.pressureLeft = ''
-						this.pressureRight = ''
-						this.$queue.showToast("记录失败！左右眼眼压不能为空")
-					}
-
-				}
+				let record = this.selectRecordButton
+				this.updateDataDesc(record,record.data)
+				console.log(JSON.stringify(record))
 			},
 			handleTap(name) {
 				this.$refs[name].show()
@@ -251,16 +191,18 @@
 				this.$queue.showLoading("正在修改...")
 				let param = {
 					userId:this.$queue.getData('UserInfo').userId,
-					visionLeft: this.visionLeft,
-					visionRight: this.visionRight,
-					pressureLeft: this.pressureLeft,
-					pressureRight: this.pressureRight,
-					motion: this.motion,
-					medication: this.medication,
-					emotion: this.emotion,
+					visionLeft: this.recordButtons[0].data.visionLeft,
+					visionRight: this.recordButtons[0].data.visionRight,
+					pressureLeft: this.recordButtons[1].data.pressureLeft,
+					pressureRight: this.recordButtons[1].data.pressureRight,
+					motion: this.recordButtons[2].data.motion,
+					medication: this.recordButtons[3].data.medication,
+					emotion: this.recordButtons[4].data.emotion,
 					recordTime: this.recordTime,
 				}
 				console.log(param)
+				if(param.visionLeft==0||param.visionRight==0||param.pressureLeft==0||param.pressureRight==0)
+					return;
 				this.$Request.post("/system/record",
 					param
 				).then(res => {
@@ -268,17 +210,8 @@
 					uni.hideLoading()
 					if (res.code == 200) {
 						this.$queue.showToast("记录成功")
-						this.visionLeft = ''
-						this.visionRight = ''
-						this.pressureLeft = ''
-						this.pressureRight = ''
-						this.motion = ''
-						this.emotion = ''
-						this.medication = ''
-						this.recordTime = ''
 					} else {
 						this.$queue.showToast(res.msg)
-
 					}
 				})
 
@@ -291,40 +224,35 @@
 				var today = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()
 				return today
 			},
-			//视力类型
-			// visionTypeChange(evt) {
-			// 	 for (let i = 0; i < this.items.length; i++) {
-			// 		if (this.items[i].value === evt.detail.value) {
-			// 			this.currentVisionType = i;
-			// 			break;
-			// 		}
-			// 	}
-			// },
-			visionTypeChange(evt){
-				console.log('switch1 发生 change 事件，携带值为', evt.target.value)
-				this.currentVisionType= evt.target.value
-				// visionTypeChange=evt.target.value
-			},
 			OnEyePressure(){
 				console.log(this.eyePressurePickerShow)
 				this.eyePressurePickerShow=!this.eyePressurePickerShow;
 			},
 			onGetHistory(){
-				this.lastHistory=null
+				let lastHistory=null
 				let userInfo= this.$queue.getData("UserInfo")
 				if(userInfo)
 				{
 					console.log(userInfo.userId)
-					// this.$Request.get("/system/record/list").then(res=>{
 					this.$Request.get("/system/record/getInfoById/"+userInfo.userId).then(res=>{
 						if(res.code  == 200)
 						{
+							console.log(JSON.stringify(res))
 							this.history=res.data
 							if(this.history.length>0)
 							{
-								this.lastHistory=this.history[this.history.length-1]
+								lastHistory=this.history[this.history.length-1]
 							}
-							// console.log(this.history.length)
+							
+							for(let i=0;i<this.recordButtons.length;i++)
+							{
+								let recordBtn = this.recordButtons[i]
+								recordBtn.desc="暂无数据"
+								if(lastHistory!=null){
+									this.updateDataDesc(recordBtn,lastHistory)
+								}
+								
+							}
 						}
 					}).catch(res=>{console.log("onGetHistory error")})
 				}
@@ -345,6 +273,36 @@
 					url:"../Intraocular-pressure/Intraocular-pressure"
 				})
 			},
+			//点击显示按钮
+			onRecordButtonClick(itemButton){
+				console.log(itemButton.name)
+				this.selectRecordButton=itemButton
+				this.showNeilModalGlobal=true
+			},
+			//更新
+			updateDataDesc(recordButton,data){
+				if(recordButton.name=="视力"){
+					recordButton.desc="左眼视力:"+data.visionLeft+ " 右眼视力:"+data.visionRight
+				}
+				else if(recordButton.name=="眼压"){
+					recordButton.desc="左眼眼压:"+data.pressureLeft+ " 右眼眼压:"+data.pressureRight	
+				}
+				else if(recordButton.name=="运动"){
+					if(data.motion!=""){
+						recordButton.desc=data.motion
+					}
+				}
+				else if(recordButton.name=="用药"){
+					if(data.medication!=""){
+						recordButton.desc=data.medication
+					}
+				}
+				else if(recordButton.name=="情绪"){
+					if(data.emotion!=""){
+						recordButton.desc=data.emotion
+					}
+				}
+			}
 		}
 	};
 </script>

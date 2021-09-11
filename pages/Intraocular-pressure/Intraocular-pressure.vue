@@ -28,9 +28,9 @@
 					<view class="h-td">备注</view>
 				</view>
 				<view class="h-tr h-tr-2" v-for="(item ,index) in remark" :index="index">
-					<view class="h-td">{{Line.categories[index]}}</view>
-					<view class="h-td">{{Line.series[0].data[index]}}</view>
-					<view class="h-td">{{Line.series[1].data[index]}}</view>
+					<view class="h-td">{{chartData.categories[index]}}</view>
+					<view class="h-td">{{chartData.series[0].data[index]}}</view>
+					<view class="h-td">{{chartData.series[1].data[index]}}</view>
 					<view class="h-td">{{medication[index]}}</view>
 					<view class="h-td">{{remark[index]}}</view>
 				</view>
@@ -68,8 +68,8 @@
 			this.loadData()
 		},
 		onReady() {
-			//模拟从服务器获取数据
-			this.getServerData()
+			// //模拟从服务器获取数据
+			// this.getServerData()
 		},
 		methods: {
 			loadData(){
@@ -83,12 +83,17 @@
 					let categories=[]
 					let leftSeries=[]
 					let rightSeries=[]
+					let medication=[]
+					let remark=[]
 					
 					for(let i=0;i<dataLength;i++){
 						let resData = resDatas[i]
 						categories.push(resData.recordTime)
 						leftSeries.push(resData.pressureLeft)
 						rightSeries.push(resData.pressureRight)
+						medication.push(resData.medication)
+						let remarkStr =resData.motion+" "+resData.emotion
+						remark.push(remarkStr)
 					}
 					
 					
@@ -97,25 +102,10 @@
 					series.push({"name":"左眼","data":leftSeries})
 					series.push({"name":"右眼","data":rightSeries})
 					this.chartData.series=series
-					// for(let i=0;i<dataLength;i++){
-					// 	this.Line.categories[i] = res.data[res.data.length -4 +i].recordTime
-					// 	this.Line.series[0].data[i] = res.data[res.data.length -4 +i].pressureRight
-					// 	this.Line.series[1].data[i] = res.data[res.data.length -4 +i].pressureLeft
-					// 	this.medication[i] = res.data[res.data.length -4 +i].medication
-					// 	if(res.data[res.data.length -4 +i].motion!=""&&res.data[res.data.length -4 +i].emotion!=""){
-					// 		this.remark[i] = res.data[res.data.length -4 +i].motion +"、"+ res.data[res.data.length -4 +i].emotion
-					// 	}else{
-					// 		this.remark[i] = res.data[res.data.length -4 +i].motion + res.data[res.data.length -4 +i].emotion
-					// 	}
-						
-					// }
+					this.medication=medication
+					this.remark=remark
 				})
 			},
-			getServerData() {
-				setTimeout(() => {
-					this.chartsDataLine1 = this.Line
-				}, 1500);
-			}
 		}
 	}
 </script>
