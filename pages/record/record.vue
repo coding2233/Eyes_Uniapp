@@ -237,7 +237,7 @@
 					this.$Request.get("/system/record/getInfoById/"+userInfo.userId).then(res=>{
 						if(res.code  == 200)
 						{
-							console.log(JSON.stringify(res))
+							// console.log(JSON.stringify(res))
 							this.history=res.data
 							if(this.history.length>0)
 							{
@@ -269,13 +269,35 @@
 			},
 			//选择历史记录
 			onSelectEyePressureHistory(e){
-				uni.navigateTo({
-					url:"../Intraocular-pressure/Intraocular-pressure"
-				})
+				if(this.selectRecordButton.name=="眼压")
+				{
+					uni.navigateTo({
+						url:"../Intraocular-pressure/Intraocular-pressure"
+					})
+				}
+				else if(this.selectRecordButton.name=="视力"){
+					uni.navigateTo({
+						url:"./vision-history"
+					})
+				}
+				else if(this.selectRecordButton.name=="运动"){
+					uni.navigateTo({
+						url:"./motion-history"
+					})
+				}
+				else if(this.selectRecordButton.name=="用药"){
+					uni.navigateTo({
+						url:"./medication-history"
+					})
+				}
+				else if(this.selectRecordButton.name=="情绪"){
+					uni.navigateTo({
+						url:"./emotion-history"
+					})
+				}
 			},
 			//点击显示按钮
 			onRecordButtonClick(itemButton){
-				console.log(itemButton.name)
 				this.selectRecordButton=itemButton
 				this.showNeilModalGlobal=true
 			},

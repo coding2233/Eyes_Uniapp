@@ -199,6 +199,50 @@
             }
             
         }
+        ,{
+            "path" : "pages/record/vision-history",
+            "style" :                                                                                    
+            {
+				"navigationBarTitleText": "视力数据",
+                "enablePullDownRefresh": false,
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#007AFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/record/motion-history",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "运动数据",
+                "enablePullDownRefresh": false,
+                "navigationBarTextStyle": "white",
+                "navigationBarBackgroundColor": "#007AFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/record/medication-history",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "用药数据",
+                "enablePullDownRefresh": false,
+                "navigationBarTextStyle": "white",
+                "navigationBarBackgroundColor": "#007AFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/record/emotion-history",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "情绪数据",
+                "enablePullDownRefresh": false,
+                "navigationBarTextStyle": "white",
+                "navigationBarBackgroundColor": "#007AFF"
+            }
+            
+        }
     ],
 	"tabBar": {
 		"color": "#7A7E83",
