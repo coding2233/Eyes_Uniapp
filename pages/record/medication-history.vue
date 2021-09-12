@@ -2,7 +2,7 @@
 	<view>
 		<u-table>
 				<u-tr>
-					<u-th>用药时间</u-th>
+					<u-th >用药时间</u-th>
 					<u-th>药品名</u-th>
 					<u-th>频次</u-th>
 					<u-th>不良反应</u-th>
@@ -42,7 +42,11 @@
 					let dataLength = res.data.length
 					for(let i=0;i<dataLength;i++){
 						let recordData= res.data[i]
-						let data = {recordTime:recordData.recordTime,medication:recordData.medication,frequency:-1,adr:"无",suspend:"1997-01-01",remark:"-"}
+						let dataMedication="-"
+						if(recordData.medication!=""){
+							dataMedication=recordData.medication
+						}
+						let data = {recordTime:recordData.recordTime,medication:dataMedication,frequency:-1,adr:"无",suspend:"1997-01-01",remark:"-"}
 						this.outputDatas.push(data)
 					}
 					

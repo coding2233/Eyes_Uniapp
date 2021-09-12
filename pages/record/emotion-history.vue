@@ -34,7 +34,11 @@
 					let dataLength = res.data.length
 					for(let i=0;i<dataLength;i++){
 						let recordData= res.data[i]
-						let data = {recordTime:recordData.recordTime,emotion:recordData.emotion}
+						let dataEmotion = "-"
+						if(recordData.emotion!=""){
+							dataEmotion=recordData.emotion
+						}
+						let data = {recordTime:recordData.recordTime,emotion:dataEmotion}
 						this.outputDatas.push(data)
 					}
 					

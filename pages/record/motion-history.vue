@@ -16,6 +16,7 @@
 					</u-tr>
 				</view>
 			</u-table>
+			
 	</view>
 </template>
 
@@ -38,7 +39,11 @@
 					let dataLength = res.data.length
 					for(let i=0;i<dataLength;i++){
 						let recordData= res.data[i]
-						let data = {recordTime:recordData.recordTime,motion:recordData.motion,duration:"29.99 min",remark:"x"}
+						let dataMotion="-"
+						if(recordData.motion!=""){
+							dataMotion=recordData.motion
+						}
+						let data = {recordTime:recordData.recordTime,motion:dataMotion,duration:"29.99 min",remark:"x"}
 						this.outputDatas.push(data)
 					}
 					
