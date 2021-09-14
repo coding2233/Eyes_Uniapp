@@ -46,13 +46,9 @@
 						</view>
 					</view>
 				</view>
-				<view v-else-if="selectRecordButton.name==='运动'">
-					<view class="input-view">
-						<view class="input-name">
-							<view style="font-size: 32upx;">运动</view>
-							<input v-model="selectRecordButton.data.motion" placeholder="请输入运动类型" />
-						</view>
-					</view>
+				<view v-else-if="selectRecordButton.name==='运动'" style="height: 360rpx;">
+					<u-button @click="motionSettings.show=true">{{selectRecordButton.data.motion}}</u-button>
+					<u-select @confirm="onSelectMotionConfirm" v-model="motionSettings.show" :list="motionSettings.list"></u-select>
 					<view class="input-view">
 						<view class="input-name">
 							<view style="font-size: 32upx;">运动时长</view>
@@ -63,6 +59,12 @@
 						<view class="input-name">
 							<view style="font-size: 32upx;">运动日期</view>
 							<input v-model="selectRecordButton.data.dateTime" placeholder="请选择运动日期" />
+						</view>
+					</view>
+					<view class="input-view">
+						<view class="input-name">
+							<view style="font-size: 32upx;">备注</view>
+							<input v-model="selectRecordButton.data.remark" placeholder="请输入备注" />
 						</view>
 					</view>
 				</view>
@@ -139,6 +141,16 @@
 					color: '#4cd964',
 					size: '22',
 					type: 'gear-filled'
+				},
+				motionSettings:{
+					show:false,
+					list:[
+						{value:0,label:'散步'},
+						{value:1,label:'快走'},
+						{value:2,label:'慢跑'},
+						{value:3,label:'骑自行车'},
+						{value:4,label:'游泳'},
+						{value:4,label:'其他'},]
 				},
 				today: "",
 				visionType:[{name:'矫正'},{name:'裸眼'}],
@@ -324,6 +336,15 @@
 						recordButton.desc=data.emotion
 					}
 				}
+			},
+			onMotionShowClick(){
+				this.motionSettings.show=true
+			},
+			//选择运动
+			onSelectMotionConfirm(e) {
+				if(this.selectRecordButton!=null && e.length>0){
+					this.selectRecordButton.data.motion=e[0].label
+				}
 			}
 		}
 	};
@@ -390,4 +411,9 @@
 		height: 50upx;
 		line-height: 50upx;
 	}
+	
+	.open-motion {
+		margin-top: 50rpx; 
+	}
+	
 </style>
