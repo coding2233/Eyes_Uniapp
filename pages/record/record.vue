@@ -41,7 +41,7 @@
 					<u-input v-model="form.medicationAdr" placeholder="请输入不良反应" />
 				</u-form-item>
 				<u-form-item label="停药时刻" label-width="150">
-					<u-input v-model="form.medicationSuspend" placeholder="请选择停药时刻" type="select" />
+					<u-input v-model="form.medicationSuspend" placeholder="请选择停药时刻" type="select" @click="medicationSuspendPickerShow=true" />
 				</u-form-item>
 				<u-form-item label="用药备注" label-width="150">
 					<u-input v-model="form.medicationRemark" placeholder="请输入用药备注" />
@@ -54,7 +54,7 @@
 				</u-form-item>
 			</u-form>
 			<u-gap height="20"></u-gap>
-			<u-section title="历史记录 (99+)" color="#2979ff" sub-title="查看更多" @click="selectHistory"></u-section>
+			<u-section :title="getHistoryTitle()" color="#2979ff" sub-title="查看更多" @click="selectHistory"></u-section>
 			<u-gap height="20"></u-gap>
 			<u-button @click="submit">提交</u-button>
 
@@ -63,6 +63,7 @@
 			<u-picker mode="time" v-model="eyePressurePickerShow" :params="timePickerParams" @confirm="eyePressureDateConfirm"></u-picker>
 			<u-picker mode="time" v-model="recordTimePickerShow" :params="timePickerParams" @confirm="recordTimeDateConfirm"></u-picker>
 			<u-picker mode="time" v-model="medicationMomentPickerShow" :params="medicationMomentTimePickerParams" @confirm="selectMedicationMomentConfirm"></u-picker>
+			<u-picker mode="time" v-model="medicationSuspendPickerShow" :params="medicationMomentTimePickerParams" @confirm="medicationSuspendConfirm"></u-picker>
 	</view>
 </template>
 
@@ -122,6 +123,8 @@ export default {
 				hour: true,
 				minute: true,
 			},
+			
+			medicationSuspendPickerShow: false,
 			
 			rules: {
 				visionType: [
@@ -237,10 +240,15 @@ export default {
 				],
 			},
 			errorType: ['message'],
+			
+			history: {},
 		};
 	},
 	onReady() {
 		this.$refs.uForm.setRules(this.rules);
+	},
+	onLoad() {
+		this.getHistory()
 	},
 	methods: {
 		selectVisionTypeConfirm(e) {
@@ -275,6 +283,7 @@ export default {
 						uni.hideLoading()
 						if (res.code == 200) {
 							this.$queue.showToast("记录成功")
+							this.history.add(param)
 						} else {
 							this.$queue.showToast(res.msg)
 						}
@@ -292,6 +301,16 @@ export default {
 		},
 		selectHistory() {
 			console.log("选择历史记录")
+			if(this.history && this.history.length>0){
+				uni.navigateTo({
+					url:'history?history='+this.history,
+				})
+			}else{
+				uni.showToast({
+					title:'暂时没有历史记录',
+					icon:"none"
+				})
+			}
 		},
 		eyePressureDateConfirm(e){
 			let date = new Date();
@@ -329,6 +348,31 @@ export default {
 			this.form.medicationMoment='';
 		},
 		
+		medicationSuspendConfirm(e){
+			this.form.medicationSuspend=e.hour+":"+e.minute+";";
+		},
+		
+		getHistory(){
+					let userInfo= this.$queue.getData("UserInfo")
+					if(userInfo)
+					{
+						this.$Request.get("/system/record/getInfoById/"+userInfo.userId).then(res=>{
+							if(res.code  == 200)
+							{
+								this.history=res.data
+								console.log(JSON.stringify(this.history))
+							}
+						}).catch(res=>{console.log("getHistory error")})
+			}
+		},
+				
+		getHistoryTitle(){
+			let title="历史记录";
+			if(this.history && this.history.length>0){
+				title+=" ("+this.history.length+")"
+			}
+			return title
+		},
 		
 	},
 };

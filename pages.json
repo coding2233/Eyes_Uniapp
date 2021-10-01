@@ -45,6 +45,15 @@
 			}
 		},
 		{
+			"path": "pages/record/history",
+			"style": {
+				"navigationBarTitleText": "历史记录",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#007AFF",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
 			"path": "pages/diagnosis/diagnosis",
 			"style": {
 				"navigationBarTitleText": "诊治",

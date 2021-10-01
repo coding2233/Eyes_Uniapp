@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<label>情绪情绪</label>
 		<u-table>
 				<u-tr>
 					<u-th>日期</u-th>
@@ -19,6 +20,7 @@
 	export default {
 		data() {
 			return {
+				name: 'emotion-history',
 				outputDatas:[]
 			}
 		},

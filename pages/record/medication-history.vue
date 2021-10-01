@@ -57,5 +57,7 @@
 </script>
 
 <style>
-
+	.container{
+		width: 2200rpx;
+	}
 </style>
