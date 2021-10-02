@@ -303,7 +303,7 @@ export default {
 			console.log("选择历史记录")
 			if(this.history && this.history.length>0){
 				uni.navigateTo({
-					url:'history?history='+this.history,
+					url:'history',
 				})
 			}else{
 				uni.showToast({

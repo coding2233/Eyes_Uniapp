@@ -1,30 +1,37 @@
 <template>
 	<view>
 		<u-tabs name="cate_name" count="cate_count" :list="tyepList" :is-scroll="false" :current="currentType" @change="onTypeChanged"></u-tabs>
-		<emotionHistory></emotionHistory>
-		<view >
-		<u-table>
-			<u-tr>
-				<view v-for="item in selectTable.tr">
-				<u-th width="200rpx">{{item}}</u-th>
-				</view>
-			</u-tr>
-			<u-tr v-for="item in selectTable.tr">
-				<view v-for="item in selectTable.tr">
-					<u-td>{{item}}</u-td>
-				</view>
-			</u-tr>
-		</u-table>
+		<view v-if="currentType===0">
+			<visionHistory :history="history"></visionHistory>
 		</view>
+		<view v-else-if="currentType===1">
+			<pressureHistory :history="history"></pressureHistory>
+		</view>
+		<view v-else-if="currentType===2">
+			<motionHistory :history="history"></motionHistory>
+		</view>
+		<view v-else-if="currentType===3">
+			<medicationHistory :history="history"></medicationHistory>
+		</view>
+		<view v-else-if="currentType===4">
+			<emotionHistory :history="history"></emotionHistory>
+		</view>
+		
+		
 	</view>
 </template>
 
 <script>
 	
+	import visionHistory from './vision-history'
+	import pressureHistory from './pressure-history'
+	import motionHistory  from './motion-history'
+	import medicationHistory from './medication-history'
 	import emotionHistory from './emotion-history'
+	
 	export default {
 		components:{
-			emotionHistory
+			visionHistory,pressureHistory,motionHistory,medicationHistory,emotionHistory,
 		},
 		data() {
 			return {
@@ -58,7 +65,9 @@
 						if(res.code  == 200)
 						{
 							this.history=res.data
+							uni.setStorageSync("history",this.history)
 							console.log(JSON.stringify(this.history))
+							this.$forceUpdate()
 						}
 					}).catch(res=>{console.log("getHistory error")})
 				}

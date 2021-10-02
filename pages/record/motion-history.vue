@@ -7,47 +7,45 @@
 					<u-th>时长</u-th>
 					<u-th>备注</u-th>
 				</u-tr>
-				<view v-for="item in outputDatas">
+				<view v-for="item in history">
 					<u-tr>
 						<u-td>{{item.recordTime}}</u-td>
-						<u-td>{{item.motion}}</u-td>
-						<u-td>{{item.duration}}</u-td>
-						<u-td>{{item.remark}}</u-td>
+						<u-td>{{getMotion(item.motion)}}</u-td>
+						<u-td>{{getDuration(item.motionDuration)}}</u-td>
+						<u-td>{{getMark(item.motionRemark)}}</u-td>
 					</u-tr>
 				</view>
 			</u-table>
-			
 	</view>
 </template>
 
 <script>
 	export default {
+		props:["history"],
 		data() {
 			return {
-				outputDatas:[]
 			}
 		},
 		onShow() {
-			this.loadData()
 		},
 		methods: {
-			loadData(){
-				this.outputDatas=[]
-				let userId = this.$queue.getData('UserInfo').userId
-				this.$Request.get("/system/record/getInfoById/"+userId).then(res =>{
-					// console.log(JSON.stringify(res))
-					let dataLength = res.data.length
-					for(let i=0;i<dataLength;i++){
-						let recordData= res.data[i]
-						let dataMotion="-"
-						if(recordData.motion!=""){
-							dataMotion=recordData.motion
-						}
-						let data = {recordTime:recordData.recordTime,motion:dataMotion,duration:"29.99 min",remark:"x"}
-						this.outputDatas.push(data)
-					}
-					
-				})
+			getMotion(motion){
+				if(motion){}else{
+					motion="-";
+				}
+				return motion;
+			},
+			getDuration(duration){
+				if(duration && duration>0){}else{
+					duration=0;
+				}
+				return duration;
+			},
+			getMark(mark){
+				if(mark){}else{
+					mark="-";
+				}
+				return mark;
 			},
 		}
 	}

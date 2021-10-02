@@ -1,56 +1,71 @@
 <template>
 	<view>
-		<u-table>
-				<u-tr>
-					<u-th >用药时间</u-th>
-					<u-th>药品名</u-th>
-					<u-th>频次</u-th>
-					<u-th>不良反应</u-th>
-					<u-th>停药时间</u-th>
-					<u-th>备注</u-th>
-				</u-tr>
-				<view v-for="item in outputDatas">
+		<scroll-view scroll-x='true' show-scrollbar='true' class="container">
+			<u-table>
 					<u-tr>
-						<u-td>{{item.recordTime}}</u-td>
-						<u-td>{{item.medication}}</u-td>
-						<u-td>{{item.frequency}}</u-td>
-						<u-td>{{item.adr}}</u-td>
-						<u-td>{{item.suspend}}</u-td>
-						<u-td>{{item.remark}}</u-td>
+						<u-th >用药时间</u-th>
+						<u-th>药品名</u-th>
+						<u-th>频次</u-th>
+						<u-th>不良反应</u-th>
+						<u-th>停药时间</u-th>
+						<u-th>备注</u-th>
 					</u-tr>
-				</view>
-			</u-table>
+					<view v-for="item in history">
+						<u-tr>
+							<u-td>{{item.recordTime}}</u-td>
+							<u-td>{{getMedication(item.medication)}}</u-td>
+							<u-td>{{getFrequency(item.medicationMoment)}}</u-td>
+							<u-td>{{getMedicationAdr(item.medicationAdr)}}</u-td>
+							<u-td>{{getMedicationSuspend(item.medicationSuspend)}}</u-td>
+							<u-td>{{getMedicationRemark(item.medicationRemark)}}</u-td>
+						</u-tr>
+					</view>
+				</u-table>
+		</scroll-view>
 	</view>
 </template>
 
 <script>
 	export default {
+		props:["history"],
 		data() {
 			return {
-				outputDatas:[]
 			}
 		},
 		onShow() {
-			this.loadData()
 		},
 		methods: {
-			loadData(){
-				this.outputDatas=[]
-				let userId = this.$queue.getData('UserInfo').userId
-				this.$Request.get("/system/record/getInfoById/"+userId).then(res =>{
-					// console.log(JSON.stringify(res))
-					let dataLength = res.data.length
-					for(let i=0;i<dataLength;i++){
-						let recordData= res.data[i]
-						let dataMedication="-"
-						if(recordData.medication!=""){
-							dataMedication=recordData.medication
-						}
-						let data = {recordTime:recordData.recordTime,medication:dataMedication,frequency:-1,adr:"无",suspend:"1997-01-01",remark:"-"}
-						this.outputDatas.push(data)
-					}
-					
-				})
+			getMedication(medication){
+				if(medication){}else{
+					medication="-"
+				}
+				return medication;
+			},
+			getFrequency(medicationMoment){
+				let frequency=0
+				if(medicationMoment){
+					let args = medicationMoment.split(';')
+					frequency=args.length
+				}
+				return frequency
+			},
+			getMedicationAdr(medicationAdr){
+				if(medicationAdr){}else{
+					medicationAdr="-"
+				}
+				return medicationAdr;
+			},
+			getMedicationSuspend(medicationSuspend){
+				if(medicationSuspend){}else{
+					medicationSuspend='-'
+				}
+				return medicationSuspend
+			},
+			getMedicationRemark(medicationRemark){
+				if(medicationRemark){}else{
+					medicationRemark="-"
+				}
+				return medicationRemark;
 			},
 		}
 	}
@@ -58,6 +73,7 @@
 
 <style>
 	.container{
-		width: 2200rpx;
+		/* width: 1200rpx; */
+		white-space: nowrap;
 	}
 </style>
