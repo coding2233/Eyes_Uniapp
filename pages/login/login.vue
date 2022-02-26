@@ -7,19 +7,23 @@
 			</view>
 			<!-- 主体表单 -->
 			<view class="main">
-				<wInput
+				<u-input style="margin-top: 50rpx;"
 					v-model="username"
 					type="text"
 					maxlength="11"
 					placeholder="用户名"
 					:focus="isFocus"
-				></wInput>
-				<wInput
+					border="surround"
+					shape="circle"
+				></u-input>
+				<u-input style="margin-top: 50rpx;"
 					v-model="password"
 					type="password"
 					maxlength="11"
 					placeholder="密码"
-				></wInput>
+					border="surround"
+					shape="circle"
+				></u-input>
 			</view>
 			<wButton 
 				class="wbutton"
@@ -123,6 +127,6 @@
 </script>
 
 <style>
-	@import url("../../components/watch-login/css/icon.css");
-	@import url("./css/main.css");
+	@import url("@/components/watch-login/css/icon.css");
+	@import url("@/components/watch-login/css/main.css");
 </style>

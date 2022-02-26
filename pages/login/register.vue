@@ -7,36 +7,40 @@
 				<image :src="logoImage"></image>
 			</view>
 			<!-- 主体 -->
-			<view class="main">
-				<wInput
+			<view style="padding-left: 70rpx;padding-right: 70rpx;">
+				<u-input style="margin-top: 50rpx;"
 					v-model="nickName"
 					type="text"
 					maxlength="8"
 					placeholder="姓名"
-				></wInput>
-				<wInput
+					border="surround"
+					shape="circle"
+				></u-input>
+				<u-input style="margin-top: 50rpx;"
 					v-model="userName"
 					type="text"
 					maxlength="12"
 					placeholder="用户名"
-				></wInput>
-				<wInput
+					border="surround"
+					shape="circle"
+				></u-input>
+				<u-input style="margin-top: 50rpx;"
 					v-model="password"
 					type="password"
 					maxlength="11"
 					placeholder="登录密码"
-					isShowPass
-				></wInput>
+					password="true"
+					border="surround"
+					shape="circle"
+				></u-input>
 				
-					
+				
 			</view>
-				
-			<wButton 
-				class="wbutton"
-				text="注 册"
+			<u-button style="margin-top: 60rpx;"
+				type="primary"
 				:rotate="isRotate" 
-				@click.native="startReg()"
-			></wButton>
+				@click="startReg()"
+			>注 册</u-button>
 			
 			<!-- 底部信息 -->
 			<view class="footer">
@@ -54,8 +58,8 @@
 
 <script>
 	let _this;
-	import wInput from '../../components/watch-login/watch-input.vue' //input
-	import wButton from '../../components/watch-login/watch-button.vue' //button
+	import wInput from '@/components/watch-login/watch-input.vue' //input
+	import wButton from '@/components/watch-login/watch-button.vue' //button
 	import neilModal from '@/components/neil-modal/neil-modal.vue';
 	export default {
 		components: {
@@ -182,6 +186,6 @@
 </script>
 
 <style>
-	@import url("../../components/watch-login/css/icon.css");
-	@import url("./css/main.css");
+	@import url("@/components/watch-login/css/icon.css");
+	@import url("@/components/watch-login/css/main.css");
 </style>
