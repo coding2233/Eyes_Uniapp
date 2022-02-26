@@ -11,7 +11,7 @@
 					v-model="username"
 					type="text"
 					maxlength="11"
-					placeholder="用户名"
+					placeholder="登记号"
 					:focus="isFocus"
 					border="surround"
 					shape="circle"

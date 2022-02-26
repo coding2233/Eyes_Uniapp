@@ -8,7 +8,7 @@
 			</view>
 			<!-- 主体 -->
 			<view style="padding-left: 70rpx;padding-right: 70rpx;">
-				<u-input style="margin-top: 50rpx;"
+				<u-input 
 					v-model="nickName"
 					type="text"
 					maxlength="8"
@@ -16,15 +16,15 @@
 					border="surround"
 					shape="circle"
 				></u-input>
-				<u-input style="margin-top: 50rpx;"
+				<u-input style="margin-top: 30rpx;"
 					v-model="userName"
 					type="text"
 					maxlength="12"
-					placeholder="用户名"
+					placeholder="登记号"
 					border="surround"
 					shape="circle"
 				></u-input>
-				<u-input style="margin-top: 50rpx;"
+				<u-input style="margin-top: 30rpx;"
 					v-model="password"
 					type="password"
 					maxlength="11"
@@ -34,9 +34,24 @@
 					shape="circle"
 				></u-input>
 				
+				<u-input style="margin-top: 30rpx;"
+					placeholder="出生年月"
+					border="surround"
+					shape="circle"
+				></u-input>
+				<u-input style="margin-top: 30rpx;"
+					placeholder="性别"
+					border="surround"
+					shape="circle"
+				></u-input>
+				<u-input style="margin-top: 30rpx;"
+					placeholder="所在城市"
+					border="surround"
+					shape="circle"
+				></u-input>
 				
 			</view>
-			<u-button style="margin-top: 60rpx;"
+			<u-button style="margin-top: 30rpx;"
 				type="primary"
 				:rotate="isRotate" 
 				@click="startReg()"

@@ -213,10 +213,10 @@
 						url: '../medication-reminder/medication-reminder'
 					})
 				}
-				uni.showToast({
-					title: `点击第${index+1}个宫格`,
-					icon: 'none'
-				})
+				// uni.showToast({
+				// 	title: `点击第${index+1}个宫格`,
+				// 	icon: 'none'
+				// })
 			},
 			add() {
 				if (this.dynamicList.length < 9) {
