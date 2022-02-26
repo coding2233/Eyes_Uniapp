@@ -65,6 +65,15 @@
 						if(res.code  == 200)
 						{
 							this.history=res.data
+							this.history.sort((a,b)=>{
+								let aTime = a.recordTime
+								let bTime = b.recordTime
+								aTime = aTime.replace(/-/g,"/")
+								bTime = bTime.replace(/-/g,"/")
+								let aTi = new Date(aTime).getTime()
+								let bTi = new Date(bTime).getTime()
+								return aTi- bTi
+							})
 							uni.setStorageSync("history",this.history)
 							console.log(JSON.stringify(this.history))
 							this.$forceUpdate()
