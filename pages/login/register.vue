@@ -1,6 +1,6 @@
 <template>
 	<view class="register">
-	
+
 		<view class="content">
 			<!-- 头部logo -->
 			<view class="header">
@@ -38,6 +38,7 @@
 					placeholder="出生年月"
 					border="surround"
 					shape="circle"
+					@focus="birthdayShow=true"
 				></u-input>
 				<u-input style="margin-top: 30rpx;"
 					placeholder="性别"
@@ -48,9 +49,15 @@
 					placeholder="所在城市"
 					border="surround"
 					shape="circle"
+					@focus="citySeleted=true"
 				></u-input>
 				
+				<u-picker mode="time" v-model="birthdayShow"></u-picker>
+				<u-picker mode="region" v-model="citySeleted" :area-code='["13", "1303", "130304"]'></u-picker>
+				
 			</view>
+
+			
 			<u-button style="margin-top: 30rpx;"
 				type="primary"
 				:rotate="isRotate" 
@@ -68,7 +75,11 @@
 				<navigator url="../agreement/agreement" open-type="navigate">《用户协议》</navigator>
 			</view>
 		</view>
+		
+		
 	</view>
+	
+	
 </template>
 
 <script>
@@ -76,9 +87,11 @@
 	import wInput from '@/components/watch-login/watch-input.vue' //input
 	import wButton from '@/components/watch-login/watch-button.vue' //button
 	import neilModal from '@/components/neil-modal/neil-modal.vue';
+	import citySelect from '@/components/citySelect/u-city-select.vue';
 	export default {
 		components: {
 			neilModal,
+			citySelect,
 		},
 		data() {
 			return {
@@ -90,6 +103,9 @@
 				verCode:"", //验证码
 				showAgree:true, //协议是否选择
 				isRotate: false, //是否加载旋转
+				citySeleted: false,
+				birthdayShow:false,
+				birthdayValue:"",
 			}
 		},
 		components:{
@@ -195,7 +211,13 @@
 					}
 							
 				})
-			}
+			},
+			selectCity(){
+				_this.value=true
+				_this.birthdayShow=true
+				console.log(_this.value)
+			},
+			cityChange(e){},
 		}
 	}
 </script>
