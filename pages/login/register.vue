@@ -38,12 +38,14 @@
 					placeholder="出生年月"
 					border="surround"
 					shape="circle"
+					:value="birthdayValue"
 					@focus="birthdayShow=true"
 				></u-input>
 				<u-input style="margin-top: 30rpx;"
 					placeholder="性别"
 					border="surround"
 					shape="circle"
+					@focus="sexShow=true"
 				></u-input>
 				<u-input style="margin-top: 30rpx;"
 					placeholder="所在城市"
@@ -52,8 +54,8 @@
 					@focus="citySeleted=true"
 				></u-input>
 				
-				<u-picker mode="time" v-model="birthdayShow"></u-picker>
-				<u-picker mode="region" v-model="citySeleted" :area-code='["13", "1303", "130304"]'></u-picker>
+				<u-picker mode="time" v-model="birthdayShow" :params='{year:true,month:true}' @confirm="onbirthdaySelected"></u-picker>
+				<u-picker mode="region" v-model="citySeleted" :default-region='["河北省", "秦皇岛市", "北戴河区"]' @confirm="onCitySelected"></u-picker>
 				
 			</view>
 
@@ -212,12 +214,15 @@
 							
 				})
 			},
-			selectCity(){
-				_this.value=true
-				_this.birthdayShow=true
-				console.log(_this.value)
-			},
 			cityChange(e){},
+			onCitySelected(city){
+				console.log(city)
+			},
+			onbirthdaySelected(birthday)
+			{
+				_this.birthdayValue=birthday.year+'-'+birthday.month
+			},
+			
 		}
 	}
 </script>
