@@ -45,17 +45,19 @@
 					placeholder="性别"
 					border="surround"
 					shape="circle"
+					:value="sexValue"
 					@focus="sexShow=true"
 				></u-input>
 				<u-input style="margin-top: 30rpx;"
 					placeholder="所在城市"
 					border="surround"
 					shape="circle"
+					:value="cityValue"
 					@focus="citySeleted=true"
 				></u-input>
-				
+				<u-picker mode="selector" v-model="sexShow" :range='["男","女"]' @confirm="onSexSelected"></u-picker>
 				<u-picker mode="time" v-model="birthdayShow" :params='{year:true,month:true}' @confirm="onbirthdaySelected"></u-picker>
-				<u-picker mode="region" v-model="citySeleted" :default-region='["河北省", "秦皇岛市", "北戴河区"]' @confirm="onCitySelected"></u-picker>
+				<u-picker mode="region" v-model="citySeleted" @confirm="onCitySelected"></u-picker>
 				
 			</view>
 
@@ -106,8 +108,11 @@
 				showAgree:true, //协议是否选择
 				isRotate: false, //是否加载旋转
 				citySeleted: false,
+				cityValue: "",
 				birthdayShow:false,
 				birthdayValue:"",
+				sexShow:false,
+				sexValue:"",
 			}
 		},
 		components:{
@@ -216,11 +221,15 @@
 			},
 			cityChange(e){},
 			onCitySelected(city){
-				console.log(city)
+				_this.cityValue = city.province.label + '-' + city.city.label + '-' + city.area.label;
 			},
 			onbirthdaySelected(birthday)
 			{
 				_this.birthdayValue=birthday.year+'-'+birthday.month
+			},
+			onSexSelected(sex)
+			{
+				_this.sexValue=sex==0?"男":"女"
 			},
 			
 		}
