@@ -206,27 +206,10 @@
 						console.log(f)
 						_this.isRotate=false
 						this.$queue.showToast('注册成功')
-						
-						let userInfo={
-							birthday:_this.birthdayValue,
-							sex:this.sexValue,
-						}
-						// this.$Request.put("/system/info",
-						// 	userInfo
-						// ).then(res => {
-						// 	console.log(userInfo,res)
-						// 	uni.hideLoading()
-						// 	if (res.code == 200) {
-						// 		uni.showToast({
-						// 		    icon: 'none',
-						// 			position: 'bottom',
-						// 		    title: '信息更新'
-						// 		});
-						// 	}
+						_this.login(this.userName,this.password)
+						// uni.navigateTo({
+						// 	url:"./login"
 						// })
-						uni.navigateTo({
-							url:"./login"
-						})
 					}else{
 						_this.isRotate=false
 						uni.showToast({
@@ -237,6 +220,52 @@
 					}
 							
 				})
+			},
+			login(un,pw) {
+				this.$queue.showLoading('登录中...');
+				this.$Request
+					.login('/loginApp', {
+						username: un,
+						password: pw
+					})
+					.then(res => {
+						if (res.code == 200) {
+							console.log(res)
+							this.$queue.setData('token', res.token);
+							this.$queue.setData("username", un);
+							this.$queue.setData("password", pw);
+							// this.getUserInfo()
+							let userInfo={
+								birthday:_this.birthdayValue,
+								sex:this.sexValue,
+							}
+							this.$Request.put("/system/info",
+								userInfo
+							).then(res => {
+								console.log(userInfo,res)
+								uni.hideLoading()
+								if (res.code == 200) {
+									uni.showToast({
+									    icon: 'none',
+										position: 'bottom',
+									    title: '信息更新'
+									});
+								}
+							})
+							uni.hideLoading();
+							uni.switchTab({
+								url: "../home/home"
+							})
+						} else {
+							uni.hideLoading();
+							this.$queue.showToast(res.msg);
+							console.log(res.msg)
+			
+						}
+					})
+					.catch(res => {
+						uni.hideLoading();
+					});
 			},
 			cityChange(e){},
 			onCitySelected(city){
