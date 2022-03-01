@@ -197,7 +197,8 @@
 				let user = {
 					userName:this.userName,
 					password:this.password,
-					nickName:this.nickName
+					nickName:this.nickName,
+					sex:this.sexValue=="男"?0:1,
 				}
 				this.$Request.post('/register',user).then(f => {
 					console.log(f)
@@ -205,6 +206,24 @@
 						console.log(f)
 						_this.isRotate=false
 						this.$queue.showToast('注册成功')
+						
+						let userInfo={
+							birthday:_this.birthdayValue,
+							sex:this.sexValue,
+						}
+						// this.$Request.put("/system/info",
+						// 	userInfo
+						// ).then(res => {
+						// 	console.log(userInfo,res)
+						// 	uni.hideLoading()
+						// 	if (res.code == 200) {
+						// 		uni.showToast({
+						// 		    icon: 'none',
+						// 			position: 'bottom',
+						// 		    title: '信息更新'
+						// 		});
+						// 	}
+						// })
 						uni.navigateTo({
 							url:"./login"
 						})
