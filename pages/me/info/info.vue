@@ -4,7 +4,7 @@
 			<cmd-transition name="fade-up">
 				<view>
 					<cmd-cel-item title="头像" slot-right arrow>
-						<cmd-avatar src="http://pic4.zhimg.com/50/v2-3d259dde90d4f5dd09fb8b2a8589df1f_hd.jpg">
+						<cmd-avatar :src="avatar">
 						</cmd-avatar>
 					</cmd-cel-item>
 					<cmd-cel-item title="姓名" slot-right arrow>
@@ -74,7 +74,8 @@ text-align: end;" v-model="userInfo.history" />
 		methods: {
 			loadData() {
 				this.userInfo = this.$queue.getData('UserInfo')
-				this.avatar = 'http://localhost:8080' + this.userInfo.avatar
+				this.avatar="../../../static/img/me/icon.boy.png"
+				// this.avatar = 'http://localhost:8080' + this.userInfo.avatar
 				console.log(this.avatar)
 				console.log(this.userInfo)
 			},

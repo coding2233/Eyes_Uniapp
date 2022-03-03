@@ -2,7 +2,7 @@
 	<view>
 		<view class="person-head">
 			<cmd-avatar
-				src="http://pic4.zhimg.com/50/v2-3d259dde90d4f5dd09fb8b2a8589df1f_hd.jpg"
+				:src="avatar"
 				size="lg" :make="{'background-color': '#fff'}"></cmd-avatar>
 			<view class="person-head-box">
 				<view class="person-head-nickname">{{userInfo.nickName}}</view>
@@ -72,10 +72,12 @@
 				this.userInfo = {
 				}
 				this.userInfo = this.$queue.getData('UserInfo')
-				if (this.userInfo.avatar) {
-					this.avatar = 'http://localhost:8080' + this.userInfo.avatar
+				this.avatar="../../static/img/me/icon.boy.png"
+				if (this.userInfo.sex=='女') {
+					this.avatar="../../static/img/me/girl.png"
+					// this.avatar = 'http://localhost:8080' + this.userInfo.avatar
 				}
-
+				
 			},
 			getUserInfo() {
 				this.$Request.get('/getInfo').then(f => {
