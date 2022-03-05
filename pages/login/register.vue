@@ -12,7 +12,7 @@
 					v-model="nickName"
 					type="text"
 					maxlength="8"
-					placeholder="姓名"
+					placeholder="昵称"
 					border="surround"
 					shape="circle"
 				></u-input>
@@ -111,6 +111,7 @@
 				cityValue: "",
 				birthdayShow:false,
 				birthdayValue:"",
+				birthdatDate:null,
 				sexShow:false,
 				sexValue:"",
 			}
@@ -173,11 +174,11 @@
 				    });
 				    return false;
 				}
-				if (this.userName.length <6||this.userName.length >12) {
+				if (this.userName.length <2||this.userName.length >24) {
 				    uni.showToast({
 				        icon: 'none',
 						position: 'bottom',
-				        title: '请输入6到12位的用户名'
+				        title: '请输入2到24位的登录号'
 				    });
 				    return false;
 				}
@@ -200,6 +201,7 @@
 					nickName:this.nickName,
 					sex:this.sexValue=="男"?0:1,
 				}
+				uni.removeStorageSync("token")
 				this.$Request.post('/register',user).then(f => {
 					console.log(f)
 					if (f.code == 200) {
@@ -223,49 +225,33 @@
 			},
 			login(un,pw) {
 				this.$queue.showLoading('登录中...');
-				this.$Request
-					.login('/loginApp', {
+				this.$Request.login('/loginApp', {
 						username: un,
 						password: pw
-					})
-					.then(res => {
-						if (res.code == 200) {
-							console.log(res)
-							this.$queue.setData('token', res.token);
-							this.$queue.setData("username", un);
-							this.$queue.setData("password", pw);
-							// this.getUserInfo()
-							let userInfo={
-								birthday:_this.birthdayValue,
-								sex:this.sexValue,
-							}
-							this.$Request.put("/system/info",
-								userInfo
-							).then(res => {
-								console.log(userInfo,res)
-								uni.hideLoading()
-								if (res.code == 200) {
-									uni.showToast({
-									    icon: 'none',
-										position: 'bottom',
-									    title: '信息更新'
-									});
+					}).then(res=>{if (res.code == 200){
+						console.log(res)
+						this.$queue.setData('token', res.token);
+						this.$queue.setData("username", un);
+						this.$queue.setData("password", pw);
+						this.$Request.get('/getInfo').then(f=>{
+							console.log("f "+f.code+"  "+f.user.userId)
+							if (f.code == 200){
+								let userInfo={
+									birthday:_this.birthdayValue+"-01",
+									sex:_this.sexValue,
+									city: _this.cityValue,
+									userId:f.user.userId,
 								}
-							})
-							uni.hideLoading();
-							uni.switchTab({
-								url: "../home/home"
-							})
-						} else {
-							uni.hideLoading();
-							this.$queue.showToast(res.msg);
-							console.log(res.msg)
-			
-						}
-					})
-					.catch(res => {
-						uni.hideLoading();
-					});
+								this.$Request.put("/system/info",userInfo).then(
+									sir=>{
+										console.log(sir)
+										uni.hideLoading()
+										uni.switchTab({url: "../home/home"})
+									}
+								)
+							}
+						})
+					}})
 			},
 			cityChange(e){},
 			onCitySelected(city){
@@ -273,6 +259,9 @@
 			},
 			onbirthdaySelected(birthday)
 			{
+				_this.birthdatDate=new Date()
+				_this.birthdatDate.setYear(birthday.year)
+				_this.birthdatDate.setMonth(birthday.month)
 				_this.birthdayValue=birthday.year+'-'+birthday.month
 			},
 			onSexSelected(sex)

@@ -254,7 +254,8 @@ module.exports = {
 			})
 		})
 	},
-
+	
+	
 	get: function(url, data, header) {
 		let token = uni.getStorageSync("token");
 		// console.log(token)
