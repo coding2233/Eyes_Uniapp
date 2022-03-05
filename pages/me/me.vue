@@ -13,7 +13,7 @@
 			<cmd-cell-item title="出生日期" :addon="userInfo.birthday?userInfo.birthday:''" slot-left arrow>
 				<cmd-icon type="money" size="24" color="#368dff"></cmd-icon>
 			</cmd-cell-item>
-			<cmd-cell-item title="性别" :addon="userInfo.sex?userInfo.sex:''" slot-left arrow>
+			<cmd-cell-item title="性别" :addon="userInfo.sex?userInfo.sex:'男'" slot-left arrow>
 				<cmd-icon type="user" size="24" color="#368dff"></cmd-icon>
 			</cmd-cell-item>
 		<!-- 	<cmd-cell-item title="我的诊断" slot-left arrow>
@@ -56,9 +56,13 @@
 			cmdIcon
 		},
 		onLoad() {
+			this.getUserInfo()
 			this.loadData()
 		},
 		onShow() {
+			this.getUserInfo()
+		},
+		onReady(){
 			this.getUserInfo()
 		},
 		data() {
@@ -81,12 +85,14 @@
 			},
 			getUserInfo() {
 				this.$Request.get('/getInfo').then(f => {
+					console.log(f)
 					if (f.code == 200) {
 						// let userInfo = f.userInfo
 						let userInfo={}
 						userInfo.userId = f.user.userId
 						userInfo.userName = f.user.userName
 						this.$Request.get("/system/record/getInfoById/" + userInfo.userId).then(res => {
+							console.log(res)
 							if (res.code == 200) {
 								if (res.data.length!=0) {
 									console.log(res)
@@ -99,8 +105,15 @@
 								this.$queue.setData("UserInfo", userInfo)
 								this.loadData()
 							}
-
+							else
+							{
+								console.log("getInfo faile.")
+							}
 						})
+					}
+					else
+					{
+						console.log("getInfo faile.")
 					}
 				})
 			},

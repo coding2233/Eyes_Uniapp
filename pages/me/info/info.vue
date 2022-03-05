@@ -74,8 +74,11 @@ text-align: end;" v-model="userInfo.history" />
 		methods: {
 			loadData() {
 				this.userInfo = this.$queue.getData('UserInfo')
+				this.userInfo.sex=this.userInfo.sex?this.userInfo.sex:'男'
 				this.avatar="../../../static/img/me/icon.boy.png"
-				// this.avatar = 'http://localhost:8080' + this.userInfo.avatar
+				if (this.userInfo.sex=='女') {
+					this.avatar="../../static/img/me/girl.png"
+				}
 				console.log(this.avatar)
 				console.log(this.userInfo)
 			},
