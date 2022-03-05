@@ -11,13 +11,13 @@
 		</view>
 		<p style="margin-left: 20rpx;">基本信息</p>
 		<view class="person-list">
-			<cmd-cell-item title="性别" :addon="userInfo.sex?userInfo.sex:'男'" slot-left arrow>
+			<cmd-cell-item @click="sexShow=true" title="性别" :addon="userInfo.sex?userInfo.sex:'男'" slot-left arrow>
 				<cmd-icon type="user" size="24" color="#368dff"></cmd-icon>
 			</cmd-cell-item>
-			<cmd-cell-item title="生日" :addon="userInfo.birthday?userInfo.birthday.substring(0,7):''" slot-left arrow>
+			<cmd-cell-item @click="birthdayShow=true" title="生日" :addon="userInfo.birthday?userInfo.birthday.substring(0,7):''" slot-left arrow>
 				<cmd-icon type="money" size="24" color="#368dff"></cmd-icon>
 			</cmd-cell-item>
-			<cmd-cell-item title="所在城市" :addon="userInfo.city" slot-left arrow>
+			<cmd-cell-item @click="cityShow=true" title="所在城市" :addon="userInfo.city" slot-left arrow>
 				<cmd-icon type="tag" size="24" color="#368dff"></cmd-icon>
 			</cmd-cell-item>
 		</view>
@@ -32,7 +32,7 @@
 			<cmd-cell-item @click="familyShow=true" title="家族史" :addon="userInfo.history?userInfo.history:'无'" slot-left arrow>
 				<cmd-icon type="alert-circle" size="24" color="#368dff"></cmd-icon>
 			</cmd-cell-item>
-			<cmd-cell-item title="确诊日期"  :addon="userInfo.diagnosis?userInfo.diagnosis:''" slot-left arrow>
+			<cmd-cell-item @click="diagnosisShow=true" title="确诊日期"  :addon="userInfo.diagnosis?userInfo.diagnosis:''" slot-left arrow>
 				<cmd-icon type="message" size="24" color="#368dff"></cmd-icon>
 			</cmd-cell-item>
 			<!-- <cmd-cell-item @click="toArchives()" title="我的青光眼档案" slot-left arrow>
@@ -43,8 +43,12 @@
 			</cmd-cell-item> -->
 		</view>
 		<u-picker mode="selector" v-model="familyShow" :range='["有","无"]' @confirm="onFamilySelected"></u-picker>
-		<u-picker mode="selector" v-model="eyesTypeShow" :range='["儿童青光眼","原发性青光眼","继发性青光眼","混合型青光眼"]' @confirm="onFamilySelected"></u-picker>
-		<u-picker mode="selector" v-model="cornerShow" :range='["开角型","闭角型"]' @confirm="onFamilySelected"></u-picker>
+		<u-picker mode="selector" v-model="eyesTypeShow" :range='["儿童青光眼","原发性青光眼","继发性青光眼","混合型青光眼"]' @confirm="oneEyesTypeSelected"></u-picker>
+		<u-picker mode="selector" v-model="cornerShow" :range='["开角型","闭角型"]' @confirm="onCornerSelected"></u-picker>
+		<u-picker mode="time" v-model="birthdayShow" :params='{year:true,month:true}' @confirm="onbirthdaySelected"></u-picker>
+		<u-picker mode="time" v-model="diagnosisShow" @confirm="ondiagnosisSelected"></u-picker>
+		<u-picker mode="selector" v-model="sexShow" :range='["男","女"]' @confirm="onSexSelected"></u-picker>
+		<u-picker mode="region" v-model="cityShow" @confirm="onCitySelected"></u-picker>
 	</view>
 </template>
 
@@ -76,6 +80,10 @@
 				familyShow:false,
 				eyesTypeShow:false,
 				cornerShow:false,
+				birthdayShow:false,
+				diagnosisShow:false,
+				sexShow:false,
+				cityShow:false,
 			};
 		},
 		methods: {
@@ -121,7 +129,52 @@
 				})
 			},
 			onFamilySelected(e){
-				console.log(e);
+				this.userInfo.history= e==0?"有":"无"
+				this.updateUserInfo()
+			},
+			oneEyesTypeSelected(e){
+				let ets = ["儿童青光眼","原发性青光眼","继发性青光眼","混合型青光眼"]
+				this.userInfo.eyesType=ets[e]
+				this.updateUserInfo()
+			},
+			onCornerSelected(e){
+				let ets = ["开角型","闭角型"]
+				this.userInfo.corner=ets[e]
+				this.updateUserInfo()
+			},
+			onbirthdaySelected(e){
+				this.userInfo.birthday=e.year+'-'+e.month+"-01"
+				this.updateUserInfo()
+			},
+			ondiagnosisSelected(e){
+				this.userInfo.diagnosis=e.year+'-'+e.month+"-"+e.day
+				this.updateUserInfo()
+			},
+			onCitySelected(city){
+				this.userInfo.city = city.province.label + '-' + city.city.label + '-' + city.area.label;
+				this.updateUserInfo()
+			},
+			onSexSelected(sex)
+			{
+				this.userInfo.sex=sex==0?"男":"女"
+				this.updateUserInfo()
+			},
+			updateUserInfo()
+			{
+				console.log("put userinfo: "+JSON.stringify(this.userInfo))
+				this.$Request.put("/system/info",this.userInfo).then(
+					sir=>{
+						console.log("put /system/info "+JSON.stringify(sir))
+						if(sir.code==200)
+						{
+							uni.showToast({
+								icon: "none",
+								title:"个人信息更新成功"
+							})
+						}
+					
+					}
+				)
 			},
 		}
 	}
