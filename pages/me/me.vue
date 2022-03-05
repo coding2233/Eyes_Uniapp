@@ -9,37 +9,38 @@
 				<view class="person-head-username">ID：{{userInfo.userName}}</view>
 			</view>
 		</view>
+		<p>基本信息</p>
 		<view class="person-list">
-			<cmd-cell-item title="出生日期" :addon="userInfo.birthday?userInfo.birthday:''" slot-left arrow>
-				<cmd-icon type="money" size="24" color="#368dff"></cmd-icon>
-			</cmd-cell-item>
 			<cmd-cell-item title="性别" :addon="userInfo.sex?userInfo.sex:'男'" slot-left arrow>
 				<cmd-icon type="user" size="24" color="#368dff"></cmd-icon>
 			</cmd-cell-item>
-		<!-- 	<cmd-cell-item title="我的诊断" slot-left arrow>
-				<cmd-icon type="image" size="24" color="#368dff"></cmd-icon>
-			</cmd-cell-item> -->
-			<cmd-cell-item title="确诊日期"  :addon="userInfo.diagnosis?userInfo.diagnosis:''" slot-left arrow>
-				<cmd-icon type="message" size="24" color="#368dff"></cmd-icon>
+			<cmd-cell-item title="生日" :addon="userInfo.birthday?userInfo.birthday:''" slot-left arrow>
+				<cmd-icon type="money" size="24" color="#368dff"></cmd-icon>
 			</cmd-cell-item>
-			<cmd-cell-item title="我的视力(显示当前视力)" :addon="userInfo.visionLeft?('左眼:'+ userInfo.visionLeft +'右眼'+userInfo.visionRight):''" slot-left
-				arrow>
-				<cmd-icon type="eye" size="24" color="#368dff"></cmd-icon>
-			</cmd-cell-item>
-			<cmd-cell-item title="我的眼压(显示当前眼压)" :addon="userInfo.pressureLeft?('左眼:'+ userInfo.pressureLeft+'右眼'+userInfo.pressureRight):''"
-				slot-left arrow>
+			<cmd-cell-item title="所在城市" :addon="userInfo.city" slot-left arrow>
 				<cmd-icon type="tag" size="24" color="#368dff"></cmd-icon>
+			</cmd-cell-item>
+		</view>
+		<p>青光眼情况</p>
+		<view class="person-list">
+			<cmd-cell-item title="青光眼类型" slot-left arrow>
+				<cmd-icon type="image" size="24" color="#368dff"></cmd-icon>
+			</cmd-cell-item>
+			<cmd-cell-item title="房角" slot-left arrow>
+				<cmd-icon type="image" size="24" color="#368dff"></cmd-icon>
 			</cmd-cell-item>
 			<cmd-cell-item title="家族史" :addon="userInfo.history" slot-left arrow>
 				<cmd-icon type="alert-circle" size="24" color="#368dff"></cmd-icon>
 			</cmd-cell-item>
-			<cmd-cell-item @click="toArchives()" title="我的青光眼档案" slot-left arrow>
+			<cmd-cell-item title="确诊日期"  :addon="userInfo.diagnosis?userInfo.diagnosis:''" slot-left arrow>
+				<cmd-icon type="message" size="24" color="#368dff"></cmd-icon>
+			</cmd-cell-item>
+			<!-- <cmd-cell-item @click="toArchives()" title="我的青光眼档案" slot-left arrow>
 				<cmd-icon type="clock" size="24" color="#368dff"></cmd-icon>
-			</cmd-cell-item>
-			<cmd-cell-item @click="fnInfoWin" title="个人设置" slot-left arrow>
+			</cmd-cell-item> -->
+		<!-- 	<cmd-cell-item @click="fnInfoWin" title="个人设置" slot-left arrow>
 				<cmd-icon type="settings" size="24" color="#368dff"></cmd-icon>
-			</cmd-cell-item>
-
+			</cmd-cell-item> -->
 		</view>
 	</view>
 </template>
