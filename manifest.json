@@ -74,7 +74,7 @@
         "enable" : false
     },
     "h5" : {
-        "title" : "眼病APP",
+        "title" : "青光眼云助手",
         "domain" : "",
         "router" : {
             "base" : "/app/"

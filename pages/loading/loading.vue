@@ -7,7 +7,7 @@
 			</view>
 			<view class="is-flex is-column is-justify-center  is-align-center ">
 				<view class="login_title">
-					眼病APP
+					青光眼云助手
 				</view>
 			</view>
 		</view>
