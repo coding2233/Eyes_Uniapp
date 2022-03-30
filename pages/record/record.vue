@@ -1,37 +1,37 @@
 <template>
 	<view class="formContainer">
 		<u-form :model="form" :rules="rules" ref="uForm" :errorType="errorType">
-				<u-form-item label="视力类别" label-width="150" prop="visionType" :required='true'>
+				<u-form-item label="视力类别" label-width="150" prop="visionType">
 					<u-input v-model="form.visionType" type="select" placeholder="请选择视力类别" :select-open="visiontypeListShow" @click="visiontypeListShow = true"/>
 				</u-form-item>
-				<u-form-item label="左眼视力" label-width="150" prop="visionLeft" :required='true'>
+				<u-form-item label="左眼视力" label-width="150" prop="visionLeft">
 					<u-input v-model="form.visionLeft" type="float" placeholder="请输入视力" />
 				</u-form-item>
-				<u-form-item label="右眼视力" label-width="150" prop="visionRight" :required='true'>
+				<u-form-item label="右眼视力" label-width="150" prop="visionRight">
 					<u-input v-model="form.visionRight" type="float" placeholder="请输入视力" />
 				</u-form-item>
-				<u-form-item label="左眼眼压" label-width="150" prop="pressureLeft" :required='true'>
+				<u-form-item label="左眼眼压" label-width="150" prop="pressureLeft">
 					<u-input v-model="form.pressureLeft" type="number" placeholder="请输入眼压" />
 				</u-form-item>
-				<u-form-item label="右眼眼压" label-width="150" prop="pressureRight" :required='true'>
+				<u-form-item label="右眼眼压" label-width="150" prop="pressureRight">
 					<u-input v-model="form.pressureRight" type="number" placeholder="请输入眼压" />
 				</u-form-item>
-				<u-form-item label="眼压测量时间" label-width="180" :required='true' prop="pressureTime">
+				<u-form-item label="眼压测量时间" label-width="180" prop="pressureTime">
 					<u-input v-model="form.pressureTime" type="select" placeholder="请选择测量时间" @click="eyePressurePickerShow=true" />
 				</u-form-item>
-				<u-form-item label="运动类型" label-width="150" :required='true' prop="motion">
+				<u-form-item label="运动类型" label-width="150" prop="motion">
 					<u-input v-model="form.motion" type="select" placeholder="请选择运动类型" @click="motionTypeListShow=true" />
 				</u-form-item>
-				<u-form-item label="运动时长" label-width="150" prop="motionDuration" :required='true'>
+				<u-form-item label="运动时长" label-width="150" prop="motionDuration">
 					<u-input v-model="form.motionDuration" placeholder="请输入运动时长" />
 				</u-form-item>
 				<u-form-item label="运动备注" label-width="150">
 					<u-input v-model="form.motionRemark" placeholder="请填写运动备注" />
 				</u-form-item>
-				<u-form-item label="用药名称" label-width="150" :required='true' prop="medication">
+				<u-form-item label="用药名称" label-width="150" prop="medication">
 					<u-input v-model="form.medication" placeholder="请输入用药名称" />
 				</u-form-item>
-				<u-form-item label="用药时刻" label-width="150" :required='true' prop="medicationMoment">
+				<u-form-item label="用药时刻" label-width="150" prop="medicationMoment">
 					<u-input v-model="form.medicationMoment" placeholder="请选择用药时刻" type="select" @click="medicationMomentPickerShow=true" />
 					<view v-if="form.medicationMoment">
 						<u-icon name="backspace" size="36" @click="clearMedicationMoment"></u-icon>
@@ -46,10 +46,10 @@
 				<u-form-item label="用药备注" label-width="150">
 					<u-input v-model="form.medicationRemark" placeholder="请输入用药备注" />
 				</u-form-item>
-				<u-form-item label="情绪类型" label-width="150" :required='true' prop="emotion">
+				<u-form-item label="情绪类型" label-width="150" prop="emotion">
 					<u-input v-model="form.emotion" placeholder="请输入情绪类型" />
 				</u-form-item>
-				<u-form-item label="记录日期" label-width="150" :required='true' prop="recordTime">
+				<u-form-item label="记录日期" label-width="150" prop="recordTime" :required='true'>
 					<u-input v-model="form.recordTime" placeholder="请选择记录日期" type="select" @click="recordTimePickerShow=true" />
 				</u-form-item>
 			</u-form>
@@ -129,8 +129,8 @@ export default {
 			rules: {
 				visionType: [
 					{
-						required: true,
-						message: '此为必填字段',
+						// required: true,
+						// message: '此为必填字段',
 						// blur和change事件触发检验
 						trigger: ['blur', 'change'],
 					}
@@ -138,8 +138,8 @@ export default {
 				visionLeft: [
 					// 必填规则
 					{
-						required: true,
-						message: '此为必填字段',
+						// required: true,
+						// message: '此为必填字段',
 						trigger: ['blur', 'change'],
 					},
 					{
@@ -150,8 +150,8 @@ export default {
 				],
 				visionRight: [
 					{
-						required: true,
-						message: '此为必填字段',
+						// required: true,
+						// message: '此为必填字段',
 						trigger: ['blur', 'change'],
 					},
 					{
@@ -162,8 +162,8 @@ export default {
 				],
 				pressureLeft: [
 					{
-						required: true,
-						message: '此为必填字段',
+						// required: true,
+						// message: '此为必填字段',
 						trigger: ['blur', 'change'],
 					},
 					{
@@ -174,8 +174,8 @@ export default {
 				],
 				pressureRight: [
 					{
-						required: true,
-						message: '此为必填字段',
+						// required: true,
+						// message: '此为必填字段',
 						trigger: ['blur', 'change'],
 					},
 					{
@@ -186,22 +186,22 @@ export default {
 				],
 				pressureTime: [
 					{
-						required: true,
-						message: '此为必填字段',
+						// required: true,
+						// message: '此为必填字段',
 						trigger: ['blur', 'change'],
 					},
 				],
 				motion: [
 					{
-						required: true,
-						message: '此为必填字段',
+						// required: true,
+						// message: '此为必填字段',
 						trigger: ['blur', 'change'],
 					},
 				],
 				motionDuration: [
 					{
-						required: true,
-						message: '此为必填字段',
+						// required: true,
+						// message: '此为必填字段',
 						trigger: ['blur', 'change'],
 					},
 					{
@@ -212,22 +212,22 @@ export default {
 				],
 				medication: [
 					{
-						required: true,
-						message: '此为必填字段',
+						// required: true,
+						// message: '此为必填字段',
 						trigger: ['blur', 'change'],
 					},
 				],
 				medicationMoment: [
 					{
-						required: true,
-						message: '此为必填字段',
+						// required: true,
+						// message: '此为必填字段',
 						trigger: ['blur', 'change'],
 					},
 				],
 				emotion:[
 					{
-						required: true,
-						message: '此为必填字段',
+						// required: true,
+						// message: '此为必填字段',
 						trigger: ['blur', 'change'],
 					},
 				],
