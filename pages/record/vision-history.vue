@@ -10,8 +10,8 @@
 				<view v-for="item in history">
 					<u-tr>
 						<u-td>{{item.recordTime}}</u-td>
-						<u-td>{{item.visionLeft}}</u-td>
-						<u-td>{{item.visionRight}}</u-td>
+						<u-td>{{getVision(item.visionLeft)}}</u-td>
+						<u-td>{{getVision(item.visionRight)}}</u-td>
 						<u-td>{{getVisionType(item.visionType)}}</u-td>
 					</u-tr>
 				</view>
@@ -36,6 +36,13 @@
 					visionType='裸眼'
 				}
 				return visionType
+			},
+			getVision(vision){
+				if(vision){
+					return vision
+				}else{
+					return "-"
+				}
 			},
 		},
 	}
