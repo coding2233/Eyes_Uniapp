@@ -16,15 +16,15 @@
 			<view class="h-table h-table-primary">
 				<view class="h-tr h-tr-2 h-thead">
 					<view class="h-td">时间</view>
-					<view class="h-td">左眼</view>
 					<view class="h-td">右眼</view>
+					<view class="h-td">左眼</view>
 					<view class="h-td">已用药物</view>
 					<view class="h-td">备注</view>
 				</view>
 				<view class="h-tr h-tr-2" v-for="(item ,index) in history" :index="index">
 					<view class="h-td">{{item.recordTime}}</view>
-					<view class="h-td">{{item.pressureLeft}}</view>
 					<view class="h-td">{{item.pressureRight}}</view>
+					<view class="h-td">{{item.pressureLeft}}</view>
 					<view class="h-td">{{item.medication}}</view>
 					<view class="h-td">{{item.motion}} {{item.emotion}}</view>
 				</view>
@@ -55,8 +55,8 @@
 				}
 				
 				let series = []
-				series.push({"name":"左眼","data":leftSeries})
 				series.push({"name":"右眼","data":rightSeries})
+				series.push({"name":"左眼","data":leftSeries})
 				chartData.categories=categories
 				chartData.series=series
 				return chartData

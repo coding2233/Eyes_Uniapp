@@ -3,15 +3,15 @@
 		<u-table>
 				<u-tr>
 					<u-th>时间</u-th>
-					<u-th>左眼</u-th>
 					<u-th>右眼</u-th>
+					<u-th>左眼</u-th>
 					<u-th>裸眼/矫正</u-th>
 				</u-tr>
 				<view v-for="item in history">
 					<u-tr>
 						<u-td>{{item.recordTime}}</u-td>
-						<u-td>{{getVision(item.visionLeft)}}</u-td>
 						<u-td>{{getVision(item.visionRight)}}</u-td>
+						<u-td>{{getVision(item.visionLeft)}}</u-td>
 						<u-td>{{getVisionType(item.visionType)}}</u-td>
 					</u-tr>
 				</view>

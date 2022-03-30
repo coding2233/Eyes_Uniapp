@@ -99,8 +99,8 @@
 					
 					this.chartData.categories=categories
 					let series = []
-					series.push({"name":"左眼","data":leftSeries})
 					series.push({"name":"右眼","data":rightSeries})
+					series.push({"name":"左眼","data":leftSeries})
 					this.chartData.series=series
 					this.medication=medication
 					this.remark=remark
